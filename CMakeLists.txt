@@ -13,7 +13,8 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(ihm_robot main.cpp)
+add_executable(ihm_robot main.cpp resource.qrc)
+
 target_link_libraries(ihm_robot
         Qt::Core
         Qt::Gui
