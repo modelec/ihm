@@ -11,9 +11,13 @@ public:
         this->mainLayout = new QVBoxLayout(this);
         this->mainLayout->setAlignment(Qt::AlignCenter);
         this->pts = new QLabel("Points : 0", this);
+        this->pts->setStyleSheet("font-size: 96px; color: black;");
         this->x = new QLabel("X : 0", this);
+        this->x->setStyleSheet("font-size: 32px; color: black;");
         this->y = new QLabel("Y : 0", this);
+        this->y->setStyleSheet("font-size: 32px; color: black;");
         this->time = new QLabel("Time : 0m0s", this);
+        this->time->setStyleSheet("font-size: 32px; color: black;");
 
         this->mainLayout->addWidget(pts);
 

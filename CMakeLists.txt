@@ -26,6 +26,8 @@ add_executable(ihm_robot main.cpp resource.qrc
         TeamChooser.h
         TestMode.cpp
         TestMode.h
+        TestModeBtn.cpp
+        TestModeBtn.h
 )
 
 target_link_libraries(ihm_robot
