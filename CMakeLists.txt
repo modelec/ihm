@@ -18,6 +18,14 @@ add_executable(ihm_robot main.cpp resource.qrc
         MainWindow.h
         homeButton.cpp
         homeButton.h
+        Homologation.cpp
+        Homologation.h
+        InGame.cpp
+        InGame.h
+        TeamChooser.cpp
+        TeamChooser.h
+        TestMode.cpp
+        TestMode.h
 )
 
 target_link_libraries(ihm_robot
