@@ -16,6 +16,8 @@ find_package(Qt6 COMPONENTS
 add_executable(ihm_robot main.cpp resource.qrc
         MainWindow.cpp
         MainWindow.h
+        homeButton.cpp
+        homeButton.h
 )
 
 target_link_libraries(ihm_robot
