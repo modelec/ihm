@@ -1,20 +1,23 @@
 #include <QApplication>
-#include <QPushButton>
-#include <QPixmap>
-#include <QMainWindow>
-#include <QVBoxLayout>
-#include <QWidget>
+
+#include "MainWindow.h"
 
 int main(int argc, char* argv[]) {
     QApplication a(argc, argv);
-    QMainWindow window;
+
+    MainWindow main;
+
+    main.show();
+
+/*    QMainWindow window;
+    window.setFixedSize(480, 320);
 
     auto *centralWidget = new QWidget(&window);
     window.setCentralWidget(centralWidget);
 
     auto *layout = new QVBoxLayout(centralWidget);
 
-    QPixmap pic(":/img/logo.png", "PNG");
+    QPixmap pic(":/img/logo_without_background.png", "PNG");
     QPushButton button("", nullptr);
     button.setIcon(pic);
     button.setIconSize(QSize(249, 51));
@@ -35,6 +38,6 @@ int main(int argc, char* argv[]) {
     test.setBaseSize(378, 46);
     layout->addWidget(&test);
 
-    window.show();
+    window.show();*/
     return QApplication::exec();
 }

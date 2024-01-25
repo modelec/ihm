@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.25)
 project(ihm_robot)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -13,7 +13,10 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(ihm_robot main.cpp resource.qrc)
+add_executable(ihm_robot main.cpp resource.qrc
+        MainWindow.cpp
+        MainWindow.h
+)
 
 target_link_libraries(ihm_robot
         Qt::Core
