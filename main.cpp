@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
 
     auto *layout = new QVBoxLayout(centralWidget);
 
-    QPixmap pic("../img/logo_complet_long-removebg-preview.png", "PNG");
+    QPixmap pic(":/img/logo.png", "PNG");
     QPushButton button("", nullptr);
     button.setIcon(pic);
     button.setIconSize(QSize(249, 51));

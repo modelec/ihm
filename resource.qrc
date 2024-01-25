@@ -3,5 +3,6 @@
     <qresource prefix="/">
         <file>img/logo.png</file>
         <file>img/logo_without_background.png</file>
+        <file>img/table.jpg</file>
     </qresource>
 </RCC>
