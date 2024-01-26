@@ -21,20 +21,19 @@ public:
 
         this->mainLayout->addWidget(pts);
 
-        this->posAndTime = new QWidget(this);
-        this->posAndTimeLayout = new QHBoxLayout(posAndTime);
+        this->posAndTimeLayout = new QHBoxLayout();
 
-        this->mainLayout->addWidget(posAndTime);
+        this->mainLayout->addLayout(this->posAndTimeLayout);
 
         this->posAndTimeLayout->addWidget(time);
 
-        this->posWidget = new QWidget(this);
-        this->posLayout = new QVBoxLayout(posWidget);
+        this->posLayout = new QVBoxLayout();
 
         this->posLayout->addWidget(x);
         this->posLayout->addWidget(y);
+        this->posLayout->setAlignment(Qt::AlignCenter);
 
-        this->posAndTimeLayout->addWidget(posWidget);
+        this->posAndTimeLayout->addLayout(this->posLayout);
 
         this->setLayout(mainLayout);
     }
@@ -60,10 +59,8 @@ private:
     QLabel* x;
     QLabel* y;
     QLabel* time;
-    QWidget* posAndTime;
     QVBoxLayout* mainLayout;
     QHBoxLayout* posAndTimeLayout;
-    QWidget* posWidget;
     QVBoxLayout* posLayout;
 
 };
