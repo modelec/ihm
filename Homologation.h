@@ -26,17 +26,26 @@ public:
         replier->setBaseSize(378, 46);
         layout->addWidget(replier);
 
-        connect(this->deplier, &QPushButton::pressed, this, [=]()
-        {
-            qInfo() << "deplier le robot !";
-        });
+        connect(this->deplier, &QPushButton::pressed, this, &Homologation::onDeplierClicked);
 
-        connect(this->replier, &QPushButton::pressed, this, [=]()
-        {
-            qInfo() << "replier le robot !";
-        });
+        connect(this->replier, &QPushButton::pressed, this, &Homologation::onReplierClicked);
 
     }
+
+protected slots:
+    void onDeplierClicked()
+    {
+        emit deplierClicked();
+    }
+
+    void onReplierClicked()
+    {
+        emit replierClicked();
+    }
+
+signals:
+    void deplierClicked();
+    void replierClicked();
 
 private:
     QLayout* layout;
