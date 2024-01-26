@@ -24,14 +24,9 @@ public:
         this->test->setStyleSheet("background-color: #5FC8E6; border-radius: 20px; height: 46px; width: 378px; color: black; margin-top: 10px;");
         this->test->setBaseSize(378, 46);
 
-        this->quit = new QPushButton("Quitter", this);
-        this->quit->setStyleSheet("background-color: #ED4747; border-radius: 20px; height: 46px; width: 378px; color: black; margin-top: 10px;");
-        this->quit->setBaseSize(378, 46);
-
         this->mainLayout->addWidget(this->homologation);
         this->mainLayout->addWidget(this->jeu);
         this->mainLayout->addWidget(this->test);
-        this->mainLayout->addWidget(this->quit);
 
         connect(this->homologation, &QPushButton::pressed, this, [=]() {
             emit homologationClicked();
@@ -44,11 +39,6 @@ public:
         connect(this->test, &QPushButton::pressed, this, [=]() {
             emit testClicked();
         });
-
-        connect(this->quit, &QPushButton::pressed, this, [=]() {
-            qApp->quit();
-        });
-
     }
 
 signals:
@@ -62,5 +52,4 @@ private:
     QPushButton* homologation;
     QPushButton* jeu;
     QPushButton* test;
-    QPushButton* quit;
 };
