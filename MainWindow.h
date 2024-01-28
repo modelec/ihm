@@ -22,6 +22,7 @@ public:
         this->homeBtn = new QPushButton("", this);
         QPixmap pic(":/img/logo_without_background.png", "PNG");
         this->homeBtn->setIcon(pic);
+        this->homeBtn->setStyleSheet("background-color: transparent; border: none;");
         this->homeBtn->setIconSize(QSize(249, 51));
         this->homeBtn->setFixedSize(QSize(400, 51));
 
