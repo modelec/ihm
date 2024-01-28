@@ -32,6 +32,7 @@ public:
 
         this->quit = new QPushButton("", this);
         this->quit->setIcon(QIcon(":/img/close.svg"));
+        this->quit->setStyleSheet("background-color: transparent; border: none;");
         this->quit->setFixedSize(QSize(51, 51));
 
         connect(this->quit, &QPushButton::pressed, this, [=]() {
