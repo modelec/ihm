@@ -18,6 +18,11 @@ int main(int argc, char* argv[]) {
         qInfo() << "deplier";
     });
 
+    MainWindow::connect(main, &MainWindow::moveRobot, [=](int x, int y, int theta)
+    {
+        qInfo() << "move" << x << y << theta;
+    });
+
     main->show();
 
     return QApplication::exec();
