@@ -20,27 +20,26 @@ public:
 
         this->mainLayout = new QVBoxLayout(centralWidget);
         this->homeBtn = new QPushButton("", this);
-        QPixmap pic(":/img/logo_without_background.png", "PNG");
-        this->homeBtn->setIcon(pic);
+        this->homeBtn->setIcon(QPixmap(":/img/logo_without_background.png", "PNG"));
         this->homeBtn->setStyleSheet("background-color: transparent; border: none;");
         this->homeBtn->setIconSize(QSize(249, 51));
         this->homeBtn->setFixedSize(QSize(400, 51));
 
         connect(this->homeBtn, &QPushButton::pressed, this, &MainWindow::onHomePressed);
 
-        this->topLayout = new QHBoxLayout();
+        this->topLayout = new QHBoxLayout;
 
         this->quit = new QPushButton("", this);
         this->quit->setIcon(QIcon(":/img/close.svg"));
         this->quit->setStyleSheet("background-color: transparent; border: none;");
-        this->quit->setFixedSize(QSize(51, 51));
 
         connect(this->quit, &QPushButton::pressed, this, [=]() {
-            qApp->quit();
+            this->close();
         });
 
-        this->topLayout->addWidget(this->quit, 0, Qt::AlignTop | Qt::AlignLeft);
         this->topLayout->addWidget(this->homeBtn);
+        this->topLayout->addWidget(this->quit, 1, Qt::AlignTop | Qt::AlignRight);
+
         this->mainLayout->addLayout(this->topLayout);
 
         this->setFixedSize(QSize(480, 320));
@@ -63,6 +62,7 @@ public:
         connect(this->teamChooser, &TeamChooser::yellowTeamClicked, this, &MainWindow::onInGamePressed);
 
         this->testMode = new TestMode(centralWidget);
+        connect(this->testMode, &TestMode::goPressed, this, &MainWindow::moveRobot);
 
         this->inGame = new InGame(teamChooser);
 
@@ -82,10 +82,8 @@ public:
     {
         if (index == 2)
         {
-            QPixmap pic(":/img/table.jpg", "JPG");
-            pic = pic.scaled(this->size(), Qt::IgnoreAspectRatio);
             QPalette palette;
-            palette.setBrush(this->backgroundRole(), QBrush(pic));
+            palette.setBrush(this->backgroundRole(), QBrush(QPixmap(":/img/table.jpg", "JPG").scaled(this->size(), Qt::IgnoreAspectRatio)));
             this->setPalette(palette);
         } else
         {
@@ -135,7 +133,7 @@ protected slots:
 signals:
     void deplierRobot();
     void replierRobot();
-    void move(int x, int y, int theta);
+    void moveRobot(int x, int y, int theta);
 
 private:
     QVBoxLayout* mainLayout;
