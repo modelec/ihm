@@ -39,19 +39,11 @@ public:
 private slots:
     void onGoPressed()
     {
-        qInfo() << "go !";
-
-        // Récupérer les valeurs des TestModeBtn
-        int xValue = X->getValue();
-        int yValue = Y->getValue();
-        int thetaValue = Theta->getValue();
-
-        // Utiliser les valeurs comme nécessaire
-        qInfo() << "Valeur de X : " << xValue;
-        qInfo() << "Valeur de Y : " << yValue;
-        qInfo() << "Valeur de Theta : " << thetaValue;
+        emit goPressed(this->X->getValue(), this->Y->getValue(), this->Theta->getValue());
     }
 
+signals:
+    void goPressed(int x, int y, int theta);
 
 private:
     QVBoxLayout* mainLayout;
