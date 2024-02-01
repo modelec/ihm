@@ -20,10 +20,12 @@ int main(int argc, char* argv[]) {
 
     MainWindow::connect(main, &MainWindow::moveRobot, [=](int x, int y, int theta)
     {
-        qInfo() << "move" << x << y << theta;
+            qInfo() << "move" << x << y << theta;
     });
 
-    main->show();
+    //main->show();
+
+    main.showFullScreen();
 
     return QApplication::exec();
 }
