@@ -1,8 +1,7 @@
 #pragma once
+
 #include <QLabel>
-#include <QPushButton>
 #include <QWidget>
-#include <QVBoxLayout>
 #include "TestModeBtn.h"
 
 class TestMode : public QWidget {
@@ -22,11 +21,11 @@ public:
         this->textcm->setAlignment(Qt::AlignCenter);
         this->mainLayout->addWidget(textcm);
 
-        this->X = new TestModeBtn("X", this);
+        this->X = new TestModeBtn("X", 0, 150, this);
         this->mainLayout->addWidget(X);
-        this->Y = new TestModeBtn("Y", this);
+        this->Y = new TestModeBtn("Y", 0, 300, this);
         this->mainLayout->addWidget(Y);
-        this->Theta = new TestModeBtn("θ", this);
+        this->Theta = new TestModeBtn("θ", -180, 180, this);
         this->mainLayout->addWidget(Theta);
 
         this->go = new QPushButton("Go", this);
@@ -40,19 +39,11 @@ public:
 private slots:
     void onGoPressed()
     {
-        qInfo() << "go !";
-
-        // Récupérer les valeurs des TestModeBtn
-        int xValue = X->getValue();
-        int yValue = Y->getValue();
-        int thetaValue = Theta->getValue();
-
-        // Utiliser les valeurs comme nécessaire
-        qInfo() << "Valeur de X : " << xValue;
-        qInfo() << "Valeur de Y : " << yValue;
-        qInfo() << "Valeur de Theta : " << thetaValue;
+        emit goPressed(this->X->getValue(), this->Y->getValue(), this->Theta->getValue());
     }
 
+signals:
+    void goPressed(int x, int y, int theta);
 
 private:
     QVBoxLayout* mainLayout;

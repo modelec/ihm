@@ -2,6 +2,7 @@
 #include <QMainWindow>
 #include <QWidget>
 #include <QStackedWidget>
+#include <QIcon>
 
 #include "homeButton.h"
 #include "Homologation.h"
@@ -19,50 +20,53 @@ public:
 
         this->mainLayout = new QVBoxLayout(centralWidget);
         this->homeBtn = new QPushButton("", this);
-        QPixmap pic(":/img/logo_without_background.png", "PNG");
-        this->homeBtn->setIcon(pic);
+        this->homeBtn->setIcon(QPixmap(":/img/logo_without_background.png", "PNG"));
+        this->homeBtn->setStyleSheet("background-color: transparent; border: none;");
         this->homeBtn->setIconSize(QSize(249, 51));
+        this->homeBtn->setFixedSize(QSize(400, 51));
 
-        connect(this->homeBtn, &QPushButton::pressed, this, [=]() {
-            this->setWidgetNb(0);
+        connect(this->homeBtn, &QPushButton::pressed, this, &MainWindow::onHomePressed);
+
+        this->topLayout = new QHBoxLayout;
+
+        this->quit = new QPushButton("", this);
+        this->quit->setIcon(QIcon(":/img/close.svg"));
+        this->quit->setStyleSheet("background-color: transparent; border: none;");
+
+        connect(this->quit, &QPushButton::pressed, this, [=]() {
+            this->close();
         });
 
-        this->mainLayout->addWidget(this->homeBtn);
+        this->topLayout->addWidget(this->homeBtn);
+        this->topLayout->addWidget(this->quit, 1, Qt::AlignTop | Qt::AlignRight);
+
+        this->mainLayout->addLayout(this->topLayout);
 
         this->setFixedSize(QSize(480, 320));
 
-        this->setLayout(mainLayout);
+        this->home = new homeButton(centralWidget);
 
-        this->home = new homeButton(this);
+        connect(this->home, &homeButton::homologationClicked, this, &MainWindow::onHomologationPressed);
 
-        connect(this->home, &homeButton::homologationClicked, this, [=]() {
-            this->setWidgetNb(1);
-        });
+        connect(this->home, &homeButton::jeuClicked, this, &MainWindow::onTeamChooserPressed);
 
-        connect(this->home, &homeButton::jeuClicked, this, [=]() {
-            this->setWidgetNb(2);
-        });
+        connect(this->home, &homeButton::testClicked, this, &MainWindow::onTestModePressed);
 
-        connect(this->home, &homeButton::testClicked, this, [=]() {
-            this->setWidgetNb(3);
-        });
+        this->homologation = new Homologation(centralWidget);
+        connect(this->homologation, &Homologation::deplierClicked, this, &MainWindow::deplierRobot);
+        connect(this->homologation, &Homologation::replierClicked, this, &MainWindow::replierRobot);
 
-        this->homologation = new Homologation(this);
+        this->teamChooser = new TeamChooser(centralWidget);
+        connect(this->teamChooser, &TeamChooser::blueTeamClicked, this, &MainWindow::onInGamePressed);
 
-        this->teamChooser = new TeamChooser(this);
-        connect(this->teamChooser, &TeamChooser::blueTeamClicked, this, [=]() {
-            this->setWidgetNb(4);
-        });
+        connect(this->teamChooser, &TeamChooser::yellowTeamClicked, this, &MainWindow::onInGamePressed);
 
-        connect(this->teamChooser, &TeamChooser::yellowTeamClicked, this, [=]() {
-            this->setWidgetNb(4);
-        });
+        this->testMode = new TestMode(centralWidget);
+        connect(this->testMode, &TestMode::goPressed, this, &MainWindow::moveRobot);
 
-        this->testMode = new TestMode(this);
+        this->inGame = new InGame(teamChooser);
 
-        this->inGame = new InGame(this);
-
-        this->stackedWidget = new QStackedWidget(this);
+        this->stackedWidget = new QStackedWidget(centralWidget);
         this->stackedWidget->addWidget(this->home);
         this->stackedWidget->addWidget(this->homologation);
         this->stackedWidget->addWidget(this->teamChooser);
@@ -78,10 +82,8 @@ public:
     {
         if (index == 2)
         {
-            QPixmap pic(":/img/table.jpg", "JPG");
-            pic = pic.scaled(this->size(), Qt::IgnoreAspectRatio);
             QPalette palette;
-            palette.setBrush(this->backgroundRole(), QBrush(pic));
+            palette.setBrush(this->backgroundRole(), QBrush(QPixmap(":/img/table.jpg", "JPG").scaled(this->size(), Qt::IgnoreAspectRatio)));
             this->setPalette(palette);
         } else
         {
@@ -92,11 +94,54 @@ public:
         this->stackedWidget->setCurrentIndex(index);
     }
 
+protected slots:
+    void onHomePressed()
+    {
+        this->setWidgetNb(0);
+    }
+
+    void onHomologationPressed()
+    {
+        this->setWidgetNb(1);
+    }
+
+    void onTeamChooserPressed()
+    {
+        this->setWidgetNb(2);
+    }
+
+    void onTestModePressed()
+    {
+        this->setWidgetNb(3);
+    }
+
+    void onInGamePressed()
+    {
+        this->setWidgetNb(4);
+    }
+
+    void onDeplierRobot()
+    {
+        emit deplierRobot();
+    }
+
+    void onReplierRobot()
+    {
+        emit replierRobot();
+    }
+
+signals:
+    void deplierRobot();
+    void replierRobot();
+    void moveRobot(int x, int y, int theta);
+
 private:
     QVBoxLayout* mainLayout;
+    QHBoxLayout* topLayout;
     QPushButton* homeBtn;
     QWidget* centralWidget;
     QStackedWidget* stackedWidget;
+    QPushButton* quit;
 
     homeButton* home;
     Homologation* homologation;
