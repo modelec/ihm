@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
 
     //main->show();
 
-    main.showFullScreen();
+    main->showFullScreen();
 
     return QApplication::exec();
 }
