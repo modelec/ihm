@@ -30,7 +30,7 @@ public:
         this->topLayout = new QHBoxLayout;
 
         this->quit = new QPushButton("", this);
-        this->quit->setIcon(QIcon(":/img/close.svg"));
+        this->quit->setIcon(QPixmap(":/img/close.png", "PNG"));
         this->quit->setStyleSheet("background-color: red; border: none;");
 
         connect(this->quit, &QPushButton::pressed, this, [=]() {
