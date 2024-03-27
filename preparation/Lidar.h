@@ -15,6 +15,8 @@ public:
         this->title = new QLabel("Lidar", this);
         this->title->setStyleSheet("font-size: 24px; color: black;");
 
+        this->startLidar = new QPushButton("Start", this);
+
         this->position = new QHBoxLayout();
         this->postionTitle = new QLabel("x: 0, y : 0, r: 0", this);
         this->positionButton = new QPushButton("Get pos", this);
@@ -30,8 +32,52 @@ public:
         this->health->addWidget(healthButton);
 
         this->mainLayout->addWidget(title, 0, Qt::AlignCenter);
+        this->mainLayout->addWidget(startLidar, 0, Qt::AlignCenter);
         this->mainLayout->addLayout(position);
         this->mainLayout->addLayout(health);
+
+        connect(this->startLidar, &QPushButton::clicked, this, &Lidar::onStartButtonClicked);
+        connect(this->positionButton, &QPushButton::clicked, this, &Lidar::onPositionButtonClicked);
+        connect(this->healthButton, &QPushButton::clicked, this, &Lidar::onHealthButtonClicked);
+    }
+
+    void TCPMessage(const QString& message)
+    {
+        auto list = message.split(";");
+
+        if (list[2] == "set health")
+        {
+            if (list[3] == "1")
+            {
+                this->healthTitle->setText("Health : OK");
+            } else if (list[3] == "0")
+            {
+                this->healthTitle->setText("Health : KO");
+            }
+        } else if (list[2] == "set avoidance")
+        {
+            auto pos = list[3].split(",");
+            this->postionTitle->setText("x: " + pos[0] + ", y: " + pos[1] + ", r: " + pos[2]);
+        }
+    }
+
+signals:
+    void askTCPServer(const std::string& message);
+
+public slots:
+    void onStartButtonClicked()
+    {
+        emit askTCPServer("lidar;strat;start;0");
+    }
+
+    void onHealthButtonClicked()
+    {
+        emit askTCPServer("lidar;strat;get health;0");
+    }
+
+    void onPositionButtonClicked()
+    {
+        emit askTCPServer("lidar;strat;get data;0");
     }
 
 private:
@@ -39,6 +85,8 @@ private:
     QLabel* title;
     QHBoxLayout* position;
     QHBoxLayout* health;
+
+    QPushButton* startLidar;
 
     QLabel* postionTitle;
     QPushButton* positionButton;

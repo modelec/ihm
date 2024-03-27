@@ -161,6 +161,10 @@ public slots:
         {
             preparationMatch->responseTiretteState(qMessage);
         }
+        if (list[0] == "lidar")
+        {
+            preparationMatch->responseLidar(qMessage);
+        }
     }
 
 signals:

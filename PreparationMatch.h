@@ -21,6 +21,7 @@ public:
         this->leftLayout = new QVBoxLayout();
         this->lidar = new Lidar(this);
         this->leftLayout->addWidget(lidar);
+        connect(this->lidar, &Lidar::askTCPServer, this, &PreparationMatch::askTCPServer);
 
         this->tiretteState = new TiretteState(this);
         this->leftLayout->addWidget(tiretteState);
@@ -96,6 +97,11 @@ public:
     {
         std::string state = message.split(";")[3].toStdString();
         this->tiretteState->setState(state);
+    }
+
+    void responseLidar(const QString& message)
+    {
+        this->lidar->TCPMessage(message);
     }
 
 signals:
