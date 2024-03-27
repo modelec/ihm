@@ -24,6 +24,7 @@ public:
 
         this->tiretteState = new TiretteState(this);
         this->leftLayout->addWidget(tiretteState);
+        connect(this->tiretteState, &TiretteState::askTCPServer, this, &PreparationMatch::askTCPServer);
 
         this->rightLayout = new QVBoxLayout();
         this->ledVerte = new OneItemPreparation("Led verte", "Check", this);

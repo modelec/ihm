@@ -22,6 +22,8 @@ public:
 
         this->mainLayout->addWidget(this->title, 0, Qt::AlignCenter);
         this->mainLayout->addLayout(this->tiretteStateLayout);
+
+        connect(this->stateButton, &QPushButton::clicked, this, &TiretteState::onStateButtonClicked);
     }
 
     void setState(const std::string& state)
@@ -33,6 +35,15 @@ public:
         {
             this->stateLabel->setText("0 : Tirette absente");
         }
+    }
+
+signals:
+    void askTCPServer(const std::string& message);
+
+public slots:
+    void onStateButtonClicked()
+    {
+        emit askTCPServer("strat;tirette;ping;0");
     }
 
 private:
