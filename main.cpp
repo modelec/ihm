@@ -29,7 +29,13 @@ int main(int argc, char* argv[]) {
     main->show();
     // main->showFullScreen();
 
-    auto* server = new TCPServer(8080);
+    int port = 8080;
+    if (argc == 2)
+    {
+        port = std::stoi(argv[1]);
+    }
+
+    auto* server = new TCPServer(port);
     server->start();
 
     QObject::connect(server, &TCPServer::messageReceived, main, &MainWindow::onTCPMesssageReceived);
