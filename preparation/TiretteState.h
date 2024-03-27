@@ -43,7 +43,7 @@ signals:
 public slots:
     void onStateButtonClicked()
     {
-        emit askTCPServer("strat;tirette;ping;0");
+        emit askTCPServer("strat;tirette;get state;0");
     }
 
 private:
