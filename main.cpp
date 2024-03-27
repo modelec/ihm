@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     main->show();
     // main->showFullScreen();
 
-    auto* server = new TCPServer(8082);
+    auto* server = new TCPServer(8080);
     server->start();
 
     QObject::connect(server, &TCPServer::messageReceived, main, &MainWindow::onTCPMesssageReceived);
