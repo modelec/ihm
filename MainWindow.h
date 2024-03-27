@@ -1,12 +1,14 @@
 #pragma once
+
 #include <QMainWindow>
 #include <QWidget>
 #include <QStackedWidget>
-#include <QIcon>
+#include <QPixmap>
 
 #include "homeButton.h"
 #include "Homologation.h"
 #include "InGame.h"
+#include "PreparationMatch.h"
 #include "TeamChooser.h"
 #include "TestMode.h"
 
@@ -58,9 +60,12 @@ public:
         connect(this->homologation, &Homologation::replierClicked, this, &MainWindow::replierRobot);
 
         this->teamChooser = new TeamChooser(centralWidget);
-        connect(this->teamChooser, &TeamChooser::blueTeamClicked, this, &MainWindow::onInGamePressed);
+        connect(this->teamChooser, &TeamChooser::spawnPointChoose, this, &MainWindow::onSpawnPointChoose);
 
-        connect(this->teamChooser, &TeamChooser::yellowTeamClicked, this, &MainWindow::onInGamePressed);
+        this->preparationMatch = new PreparationMatch(centralWidget);
+        connect(this->preparationMatch, &PreparationMatch::startGame, this, &MainWindow::onStartGame);
+        // connect(this->preparationMatch, &PreparationMatch::askTCPServer, this, &MainWindow::broadcastTCPMessage);
+        connect(this->preparationMatch, &PreparationMatch::askTCPServer, this, &MainWindow::broadcastTCPMessage);
 
         this->testMode = new TestMode(centralWidget);
         connect(this->testMode, &TestMode::goPressed, this, &MainWindow::moveRobot);
@@ -71,6 +76,7 @@ public:
         this->stackedWidget->addWidget(this->home);
         this->stackedWidget->addWidget(this->homologation);
         this->stackedWidget->addWidget(this->teamChooser);
+        this->stackedWidget->addWidget(this->preparationMatch);
         this->stackedWidget->addWidget(this->testMode);
         this->stackedWidget->addWidget(this->inGame);
 
@@ -86,11 +92,15 @@ public:
             QPalette palette;
             palette.setBrush(this->backgroundRole(), QBrush(QPixmap(":/img/table.jpg", "JPG").scaled(this->size(), Qt::IgnoreAspectRatio)));
             this->setPalette(palette);
+            this->homeBtn->hide();
+            this->quit->hide();
         } else
         {
             QPalette palette;
             palette.setBrush(this->backgroundRole(), QBrush(Qt::white));
             this->setPalette(palette);
+            this->homeBtn->show();
+            this->quit->show();
         }
         this->stackedWidget->setCurrentIndex(index);
     }
@@ -113,12 +123,17 @@ protected slots:
 
     void onTestModePressed()
     {
+        this->setWidgetNb(4);
+    }
+
+    void onSpawnPointChoose(int nb)
+    {
         this->setWidgetNb(3);
     }
 
-    void onInGamePressed()
+    void onStartGame()
     {
-        this->setWidgetNb(4);
+        this->setWidgetNb(5);
     }
 
     void onDeplierRobot()
@@ -131,10 +146,24 @@ protected slots:
         emit replierRobot();
     }
 
+public slots:
+    void onTCPMesssageReceived(const std::string& message)
+    {
+        QString qMessage = QString::fromStdString(message);
+
+        auto list = qMessage.split(";");
+
+        if (list[2].startsWith("pong"))
+        {
+            preparationMatch->responseFromPing(qMessage);
+        }
+    }
+
 signals:
     void deplierRobot();
     void replierRobot();
     void moveRobot(int x, int y, int theta);
+    void broadcastTCPMessage(const std::string& message);
 
 private:
     QVBoxLayout* mainLayout;
@@ -147,6 +176,7 @@ private:
     homeButton* home;
     Homologation* homologation;
     TeamChooser* teamChooser;
+    PreparationMatch* preparationMatch;
     TestMode* testMode;
     InGame* inGame;
 };
