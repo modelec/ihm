@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
             qInfo() << "move" << x << y << theta;
     });
 
-    if (argc == 2)
+    if (argc >= 2)
     {
         if (argv[1] == std::string("fullscreen"))
         {
