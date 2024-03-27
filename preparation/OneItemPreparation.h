@@ -36,6 +36,11 @@ public:
         this->checkBox->toggle();
     }
 
+    bool isChecked() const
+    {
+        return this->checkBox->isChecked();
+    }
+
 signals:
     void buttonClicked();
 

@@ -157,6 +157,10 @@ public slots:
         {
             preparationMatch->responseFromPing(qMessage);
         }
+        if (list[0] == "tirette" && list[2] == "set state")
+        {
+            preparationMatch->responseTiretteState(qMessage);
+        }
     }
 
 signals:

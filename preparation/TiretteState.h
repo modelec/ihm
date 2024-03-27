@@ -15,13 +15,24 @@ public:
         this->title->setStyleSheet("font-size: 24px; color: black;");
 
         this->tiretteStateLayout = new QHBoxLayout();
-        this->stateLabel = new QLabel("1 : ", this);
+        this->stateLabel = new QLabel(" ", this);
         this->stateButton = new QPushButton("Get state", this);
         this->tiretteStateLayout->addWidget(stateLabel);
         this->tiretteStateLayout->addWidget(stateButton);
 
         this->mainLayout->addWidget(this->title, 0, Qt::AlignCenter);
         this->mainLayout->addLayout(this->tiretteStateLayout);
+    }
+
+    void setState(const std::string& state)
+    {
+        if (state == "1")
+        {
+            this->stateLabel->setText("1 : Tirette en place");
+        } else if (state == "0")
+        {
+            this->stateLabel->setText("0 : Tirette absente");
+        }
     }
 
 private:

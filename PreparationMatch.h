@@ -65,7 +65,13 @@ public:
         this->mainLayout->addLayout(gridLayout);
         this->mainLayout->addWidget(startButton);
 
-        connect(this->startButton, &QPushButton::pressed, this, &PreparationMatch::onStartButtonClicked);
+        connect(this->startButton, &QPushButton::pressed, [&]()
+        {
+            if (ledVerte->isChecked() && arduino->isChecked() && aruco->isChecked() && lidarPing->isChecked() && tirette->isChecked())
+            {
+                emit startGame();
+            }
+        });
     }
 
     void responseFromPing(const QString& message)
@@ -85,17 +91,16 @@ public:
         }*/
     }
 
+    void responseTiretteState(const QString& message)
+    {
+        std::string state = message.split(";")[3].toStdString();
+        this->tiretteState->setState(state);
+    }
+
 signals:
     void startGame();
 
     void askTCPServer(const std::string& message);
-
-public slots:
-    void onStartButtonClicked()
-    {
-        emit startGame();
-    }
-
 
 private:
     QVBoxLayout* mainLayout;
@@ -112,4 +117,6 @@ private:
     TiretteState* tiretteState;
 
     QPushButton* startButton;
+
+    int nbOk = 0;
 };
