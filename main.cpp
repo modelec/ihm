@@ -26,13 +26,24 @@ int main(int argc, char* argv[]) {
             qInfo() << "move" << x << y << theta;
     });
 
-    main->show();
-    // main->showFullScreen();
-
-    int port = 8080;
     if (argc == 2)
     {
-        port = std::stoi(argv[1]);
+        if (argv[1] == std::string("fullscreen"))
+        {
+            main->showFullScreen();
+        } else
+        {
+            main->show();
+        }
+    } else
+    {
+        main->show();
+    }
+
+    int port = 8080;
+    if (argc == 3)
+    {
+        port = std::stoi(argv[2]);
     }
 
     auto* server = new TCPServer(port);
