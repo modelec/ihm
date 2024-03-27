@@ -40,8 +40,6 @@ set(TCP
         tcp/TCPServer.hpp
         tcp/TCPServer.cpp
         tcp/utils.hpp
-        tcp/QTTCPSocketServer.cpp
-        tcp/QTTCPSocketServer.h
 )
 
 
