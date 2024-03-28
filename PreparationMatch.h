@@ -43,17 +43,17 @@ public:
 
         this->aruco = new OneItemPreparation("Aruco", "Ping", this);
         connect(this->aruco, &OneItemPreparation::buttonClicked, this, [=]() {
-            emit askTCPServer("ihm;aruco;ping;0");
+            emit askTCPServer("ihm;aruco;ping;1");
         });
 
         this->lidarPing = new OneItemPreparation("Lidar", "Ping", this);
         connect(this->lidarPing, &OneItemPreparation::buttonClicked, this, [=]() {
-            emit askTCPServer("ihm;lidar;ping;0");
+            emit askTCPServer("ihm;lidar;ping;1");
         });
 
         this->tirette = new OneItemPreparation("Tirette", "Ping", this);
         connect(this->tirette, &OneItemPreparation::buttonClicked, this, [=]() {
-            emit askTCPServer("ihm;tirette;ping;0");
+            emit askTCPServer("ihm;tirette;ping;1");
         });
 
         this->rightLayout->addWidget(ledVerte);
