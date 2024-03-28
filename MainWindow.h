@@ -52,7 +52,7 @@ public:
 
         this->setFixedSize(QSize(480, 320));
 
-        this->home = new homeButton(centralidget);
+        this->home = new homeButton(centralWidget);
 
         connect(this->home, &homeButton::homologationClicked, this, &MainWindow::onHomologationPressed);
 
