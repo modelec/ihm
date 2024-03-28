@@ -16,7 +16,6 @@ public:
         this->item = new QLabel(title, this);
         this->item->setStyleSheet("font-size: 24px; color: black;");
         this->checkBox = new QCheckBox(this);
-        this->checkBox->setStyleSheet("height: 46px, width: 46px;");
         this->button = new QPushButton(buttonText, this);
         this->button->setStyleSheet("height: 46px; color: black; font-size: 24px;");
 
