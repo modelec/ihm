@@ -13,6 +13,7 @@
 #include "PreparationMatch.h"
 #include "TeamChooser.h"
 #include "TestMode.h"
+#include "WaintingForTirette.h"
 
 class MainWindow : public QMainWindow, public TCPClient {
     Q_OBJECT
@@ -50,7 +51,7 @@ public:
 
         this->mainLayout->addLayout(this->topLayout);
 
-        this->setFixedSize(QSize(480, 320));
+        this->setFixedSize(QSize(800, 480));
 
         this->home = new homeButton(centralWidget);
 
@@ -68,10 +69,18 @@ public:
         connect(this->teamChooser, &TeamChooser::spawnPointChoose, this, &MainWindow::onSpawnPointChoose);
 
         this->preparationMatch = new PreparationMatch(centralWidget);
-        connect(this->preparationMatch, &PreparationMatch::startGame, this, &MainWindow::onStartGame);
+        connect(this->preparationMatch, &PreparationMatch::startGame, [&]()
+        {
+            this->waitingForTiretteValue = true;
+            this->waintingForTirette->startWaiting();
+            emit this->onWaitingForTirette();
+        });
         connect(this->preparationMatch, &PreparationMatch::askTCPServer, [&](const std::string& message) {
             this->sendMessage(message.c_str());
         });
+
+        this->waintingForTirette = new WaintingForTirette(centralWidget);
+        connect(this->waintingForTirette, &WaintingForTirette::startGame, this, &MainWindow::onStartGame);
 
         this->testMode = new TestMode(centralWidget);
         connect(this->testMode, &TestMode::goPressed, this, &MainWindow::moveRobot);
@@ -84,6 +93,7 @@ public:
         this->stackedWidget->addWidget(this->teamChooser);
         this->stackedWidget->addWidget(this->preparationMatch);
         this->stackedWidget->addWidget(this->testMode);
+        this->stackedWidget->addWidget(this->waintingForTirette);
         this->stackedWidget->addWidget(this->inGame);
 
         this->mainLayout->addWidget(this->stackedWidget);
@@ -137,9 +147,14 @@ protected slots:
         this->setWidgetNb(3);
     }
 
-    void onStartGame()
+    void onWaitingForTirette()
     {
         this->setWidgetNb(5);
+    }
+
+    void onStartGame()
+    {
+        this->setWidgetNb(6);
     }
 
     void onDeplierRobot()
@@ -163,7 +178,13 @@ protected slots:
         }
         if (TCPSocket::contains(list[0], "tirette") && TCPSocket::contains(list[2], "set state"))
         {
-            preparationMatch->responseTiretteState(QString::fromStdString(message));
+            if (waitingForTiretteValue)
+            {
+                waintingForTirette->responseFromTirette(message);
+            } else
+            {
+                preparationMatch->responseTiretteState(QString::fromStdString(message));
+            }
         }
         if (TCPSocket::contains(list[0], "lidar"))
         {
@@ -190,6 +211,8 @@ private:
     TeamChooser* teamChooser;
     PreparationMatch* preparationMatch;
     TestMode* testMode;
+    WaintingForTirette* waintingForTirette;
     InGame* inGame;
 
+    bool waitingForTiretteValue = false;
 };

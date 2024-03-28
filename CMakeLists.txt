@@ -42,6 +42,8 @@ set(SOURCES
         preparation/Lidar.cpp
         preparation/OneItemPreparation.cpp
         preparation/TiretteState.cpp
+        WaintingForTirette.cpp
+        WaintingForTirette.h
 )
 
 add_executable(ihm_robot resource.qrc ${HEADERS} ${SOURCES})
