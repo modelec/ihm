@@ -45,7 +45,7 @@ public:
     {
         std::vector<std::string> list = TCPSocket::split(response, ";");
 
-        if (list[3] == "1")
+        if (list[3] == "0")
         {
             emit startGame();
         }
