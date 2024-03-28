@@ -154,21 +154,22 @@ protected slots:
     }
 
 
-    void handleMessage(const std::string& message)
+    void handleMessage(const QByteArray &message)
     {
-        std::vector<std::string> list = TCPSocket::split(message, ";");
+        std::string mes = message.toStdString();
+        std::vector<std::string> list = TCPSocket::split(mes, ";");
 
         if (TCPSocket::startWith(list[2], "pong"))
         {
-            preparationMatch->responseFromPing(QString::fromStdString(message));
+            preparationMatch->responseFromPing(QString::fromStdString(mes));
         }
         if (TCPSocket::contains(list[0], "tirette") && TCPSocket::contains(list[2], "set state"))
         {
-            preparationMatch->responseTiretteState(QString::fromStdString(message));
+            preparationMatch->responseTiretteState(QString::fromStdString(mes));
         }
         if (TCPSocket::contains(list[0], "lidar"))
         {
-            preparationMatch->responseLidar(QString::fromStdString(message));
+            preparationMatch->responseLidar(QString::fromStdString(mes));
         }
     }
 
