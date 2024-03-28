@@ -43,8 +43,8 @@ set(SOURCES
         preparation/Lidar.cpp
         preparation/OneItemPreparation.cpp
         preparation/TiretteState.cpp
-        tcp/TCPClient.cpp
-        tcp/TCPClient.h
+        tcp/MyTCPClient.cpp
+        tcp/MyTCPClient.h
 )
 
 add_executable(ihm_robot resource.qrc ${HEADERS} ${SOURCES})

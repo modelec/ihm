@@ -3,11 +3,11 @@
 #include <QObject>
 #include <QTcpSocket>
 
-class TCPSocket : public QObject
+class MyTCPSocket : public QObject
 {
     Q_OBJECT
 public:
-    explicit TCPSocket(QObject *parent = nullptr);
+    explicit MyTCPSocket(QObject *parent = nullptr);
     void connectToServer(const QString &host, quint16 port);
     void sendMessage(const QByteArray &message);
 

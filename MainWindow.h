@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QStackedWidget>
 #include <QPixmap>
-#include <TCPSocket/TCPClient.hpp>
 #include <TCPSocket/TCPUtils.hpp>
 
 #include "homeButton.h"
@@ -13,12 +12,16 @@
 #include "PreparationMatch.h"
 #include "TeamChooser.h"
 #include "TestMode.h"
+#include "tcp/MyTCPClient.h"
 
-class MainWindow : public QMainWindow, public TCPClient {
+class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
-    MainWindow(const char* address = "127.0.0.1", int port = 8080, QWidget* parent = nullptr) : QMainWindow(parent), TCPClient(address, port)
+    MainWindow(const char* address = "127.0.0.1", int port = 8080, QWidget* parent = nullptr) : QMainWindow(parent)
     {
+        this->socketClient = new MyTCPSocket(this);
+        this->socketClient->connectToServer(address, port);
+        connect(this->socketClient, &MyTCPSocket::messageReceived, this, &MainWindow::handleMessage);
         this->centralWidget = new QWidget(this);
         this->setCentralWidget(centralWidget);
 
@@ -49,7 +52,7 @@ public:
 
         this->setFixedSize(QSize(480, 320));
 
-        this->home = new homeButton(centralWidget);
+        this->home = new homeButton(centralidget);
 
         connect(this->home, &homeButton::homologationClicked, this, &MainWindow::onHomologationPressed);
 
@@ -68,7 +71,7 @@ public:
         connect(this->preparationMatch, &PreparationMatch::startGame, this, &MainWindow::onStartGame);
         // connect(this->preparationMatch, &PreparationMatch::askTCPServer, this, &MainWindow::broadcastTCPMessage);
         connect(this->preparationMatch, &PreparationMatch::askTCPServer, [&](const std::string& message) {
-            this->sendMessage(message.c_str());
+            this->socketClient->sendMessage(message.c_str());
         });
 
         this->testMode = new TestMode(centralWidget);
@@ -107,26 +110,6 @@ public:
             this->quit->show();
         }
         this->stackedWidget->setCurrentIndex(index);
-    }
-
-    void handleMessage(const std::string& message) override
-    {
-        std::cout << "Received message: " << message << std::endl;
-
-        std::vector<std::string> list = TCPSocket::split(message, ";");
-
-        if (TCPSocket::startWith(list[2], "pong"))
-        {
-            preparationMatch->responseFromPing(QString::fromStdString(message));
-        }
-        if (TCPSocket::contains(list[0], "tirette") && TCPSocket::contains(list[2], "set state"))
-        {
-            preparationMatch->responseTiretteState(QString::fromStdString(message));
-        }
-        if (TCPSocket::contains(list[0], "lidar"))
-        {
-            preparationMatch->responseLidar(QString::fromStdString(message));
-        }
     }
 
 protected slots:
@@ -170,6 +153,26 @@ protected slots:
         emit replierRobot();
     }
 
+
+    void handleMessage(const std::string& message)
+    {
+        std::vector<std::string> list = TCPSocket::split(message, ";");
+
+        if (TCPSocket::startWith(list[2], "pong"))
+        {
+            preparationMatch->responseFromPing(QString::fromStdString(message));
+        }
+        if (TCPSocket::contains(list[0], "tirette") && TCPSocket::contains(list[2], "set state"))
+        {
+            preparationMatch->responseTiretteState(QString::fromStdString(message));
+        }
+        if (TCPSocket::contains(list[0], "lidar"))
+        {
+            preparationMatch->responseLidar(QString::fromStdString(message));
+        }
+    }
+
+
 signals:
     void deplierRobot();
     void replierRobot();
@@ -189,4 +192,6 @@ private:
     PreparationMatch* preparationMatch;
     TestMode* testMode;
     InGame* inGame;
+
+    MyTCPSocket* socketClient;
 };
