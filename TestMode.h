@@ -20,7 +20,6 @@ public:
         textcm->setStyleSheet("font-size: 14px; font-weight: bold; color: black;");
         this->textcm->setAlignment(Qt::AlignCenter);
         this->mainLayout->addWidget(textcm);
-
         this->textrad = new QLabel("(en rad)", this);
         textrad->setStyleSheet("font-size: 14px; font-weight: bold; color: black;");
         this->textrad->setAlignment(Qt::AlignCenter);

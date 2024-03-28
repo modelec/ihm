@@ -1,14 +1,19 @@
 #pragma once
 
 #include <QLabel>
+#include <QPushButton>
 #include <QWidget>
 #include <QTimer>
 #include <QVBoxLayout>
 #include <TCPSocket/TCPUtils.hpp>
 
+#include "homeButton.h"
+
+
 class WaintingForTirette : public QWidget {
     Q_OBJECT
 public:
+
     WaintingForTirette(QWidget* parent = nullptr) : QWidget(parent)
     {
         this->mainLayout = new QVBoxLayout(this);
@@ -31,6 +36,13 @@ public:
             }
             this->wating->setText(message);
         });
+
+        this->disarme = new QPushButton("Disarme", this);
+        this->disarme->setStyleSheet("background-color: #5FC8E6; border-radius: 20px; height: 66px; width: 378px; color: black; font-size: 33px;");
+        this->disarme->setBaseSize(378, 66);
+        this->mainLayout->addWidget(this->disarme);
+        connect(this->disarme, &QPushButton::pressed, this, &WaintingForTirette::disarmePressed);
+
     }
 
     ~WaintingForTirette()
@@ -58,6 +70,7 @@ public:
 
 signals:
     void startGame();
+    void disarmePressed();
 
 
 private:
@@ -65,6 +78,7 @@ private:
     QLabel* title;
     QLabel* wating;
     QTimer* timer;
+    QPushButton* disarme;
 
     int i = 0;
 };

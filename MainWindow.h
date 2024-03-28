@@ -81,6 +81,11 @@ public:
 
         this->waintingForTirette = new WaintingForTirette(centralWidget);
         connect(this->waintingForTirette, &WaintingForTirette::startGame, this, &MainWindow::onStartGame);
+        connect(this->waintingForTirette, &WaintingForTirette::disarmePressed, [&]()
+        {
+            this->waitingForTiretteValue = false;
+            this->setWidgetNb(0);
+        });
 
         this->testMode = new TestMode(centralWidget);
         connect(this->testMode, &TestMode::goPressed, this, &MainWindow::moveRobot);
