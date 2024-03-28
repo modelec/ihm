@@ -17,6 +17,7 @@ public:
         this->gridLayout = new QHBoxLayout();
 
         this->startButton = new QPushButton("Play", this);
+        this->startButton->setStyleSheet("background-color: #5FC8E6; border-radius: 20px; height: 66px; width: 378px; margin-top: 20px; color: black; font-size: 33px;");
 
         this->leftLayout = new QVBoxLayout();
         this->lidar = new Lidar(this);

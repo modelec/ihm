@@ -17,6 +17,7 @@ public:
         this->tiretteStateLayout = new QHBoxLayout();
         this->stateLabel = new QLabel(" ", this);
         this->stateButton = new QPushButton("Get state", this);
+        this->stateButton->setStyleSheet("height: 46px; color: black; font-size: 24px;");
         this->tiretteStateLayout->addWidget(stateLabel);
         this->tiretteStateLayout->addWidget(stateButton);
 

@@ -16,10 +16,15 @@ public:
         this->text->setAlignment(Qt::AlignCenter);
         this->mainLayout->addWidget(text);
 
-        this->textcm = new QLabel("(en cm)", this);
+        this->textcm = new QLabel("(en mm)", this);
         textcm->setStyleSheet("font-size: 14px; font-weight: bold; color: black;");
         this->textcm->setAlignment(Qt::AlignCenter);
         this->mainLayout->addWidget(textcm);
+
+        this->textrad = new QLabel("(en rad)", this);
+        textrad->setStyleSheet("font-size: 14px; font-weight: bold; color: black;");
+        this->textrad->setAlignment(Qt::AlignCenter);
+        this->mainLayout->addWidget(textrad);
 
         this->X = new TestModeBtn("X", 0, 150, this);
         this->mainLayout->addWidget(X);
@@ -53,4 +58,5 @@ private:
     TestModeBtn* Theta;
     QPushButton* go;
     QLabel* textcm;
+    QLabel* textrad;
 };

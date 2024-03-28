@@ -31,6 +31,7 @@ public:
         this->homeBtn->setStyleSheet("background-color: transparent; border: none;");
         this->homeBtn->setIconSize(QSize(249, 51));
         this->homeBtn->setFixedSize(QSize(400, 51));
+        this->homeBtn->setCursor(Qt::PointingHandCursor);
 
         connect(this->homeBtn, &QPushButton::pressed, this, &MainWindow::onHomePressed);
 
@@ -40,6 +41,7 @@ public:
         this->quit->setIcon(QPixmap(":/img/close.png", "PNG"));
         this->quit->setIconSize(QSize(51, 51));
         this->quit->setStyleSheet("background-color: transparent; border: none;");
+        this->quit->setCursor(Qt::PointingHandCursor);
 
         connect(this->quit, &QPushButton::pressed, this, [=]() {
             this->close();

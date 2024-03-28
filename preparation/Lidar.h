@@ -16,17 +16,22 @@ public:
         this->title->setStyleSheet("font-size: 24px; color: black;");
 
         this->startLidar = new QPushButton("Start", this);
+        this->startLidar->setStyleSheet("height: 46px; color: black; font-size: 24px;");
 
         this->position = new QHBoxLayout();
         this->postionTitle = new QLabel("x: 0, y : 0, r: 0", this);
+        this->postionTitle->setStyleSheet("font-size: 24px; color: black;");
         this->positionButton = new QPushButton("Get pos", this);
+        this->positionButton->setStyleSheet("height: 46px; color: black; font-size: 24px;");
 
         this->position->addWidget(postionTitle);
         this->position->addWidget(positionButton);
 
         this->health = new QHBoxLayout();
         this->healthTitle = new QLabel("Health : OK", this);
+        this->healthTitle->setStyleSheet("font-size: 24px; color: black;");
         this->healthButton = new QPushButton("Get health", this);
+        this->healthButton->setStyleSheet("height: 46px; color: black; font-size: 24px;");
 
         this->health->addWidget(healthTitle);
         this->health->addWidget(healthButton);
