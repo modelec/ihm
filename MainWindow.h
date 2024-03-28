@@ -5,6 +5,7 @@
 #include <QStackedWidget>
 #include <QPixmap>
 #include <TCPSocket/TCPUtils.hpp>
+#include <TCPSocket/TCPClient.hpp>
 
 #include "homeButton.h"
 #include "Homologation.h"
@@ -12,16 +13,13 @@
 #include "PreparationMatch.h"
 #include "TeamChooser.h"
 #include "TestMode.h"
-#include "tcp/MyTCPClient.h"
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow, public TCPClient {
     Q_OBJECT
 public:
-    MainWindow(const char* address = "127.0.0.1", int port = 8080, QWidget* parent = nullptr) : QMainWindow(parent)
+    MainWindow(const char* address = "127.0.0.1", int port = 8080, QWidget* parent = nullptr) : QMainWindow(parent), TCPClient(address, port)
     {
-        this->socketClient = new MyTCPSocket(this);
-        this->socketClient->connectToServer(address, port);
-        connect(this->socketClient, &MyTCPSocket::messageReceived, this, &MainWindow::handleMessage);
+        this->start();
         this->centralWidget = new QWidget(this);
         this->setCentralWidget(centralWidget);
 
@@ -71,9 +69,8 @@ public:
 
         this->preparationMatch = new PreparationMatch(centralWidget);
         connect(this->preparationMatch, &PreparationMatch::startGame, this, &MainWindow::onStartGame);
-        // connect(this->preparationMatch, &PreparationMatch::askTCPServer, this, &MainWindow::broadcastTCPMessage);
         connect(this->preparationMatch, &PreparationMatch::askTCPServer, [&](const std::string& message) {
-            this->socketClient->sendMessage(message.c_str());
+            this->sendMessage(message.c_str());
         });
 
         this->testMode = new TestMode(centralWidget);
@@ -156,22 +153,21 @@ protected slots:
     }
 
 
-    void handleMessage(const QByteArray &message)
+    void handleMessage(const std::string& message) override
     {
-        std::string mes = message.toStdString();
-        std::vector<std::string> list = TCPSocket::split(mes, ";");
+        std::vector<std::string> list = TCPSocket::split(message, ";");
 
         if (TCPSocket::startWith(list[2], "pong"))
         {
-            preparationMatch->responseFromPing(QString::fromStdString(mes));
+            preparationMatch->responseFromPing(QString::fromStdString(message));
         }
         if (TCPSocket::contains(list[0], "tirette") && TCPSocket::contains(list[2], "set state"))
         {
-            preparationMatch->responseTiretteState(QString::fromStdString(mes));
+            preparationMatch->responseTiretteState(QString::fromStdString(message));
         }
         if (TCPSocket::contains(list[0], "lidar"))
         {
-            preparationMatch->responseLidar(QString::fromStdString(mes));
+            preparationMatch->responseLidar(QString::fromStdString(message));
         }
     }
 
@@ -196,5 +192,4 @@ private:
     TestMode* testMode;
     InGame* inGame;
 
-    MyTCPSocket* socketClient;
 };
