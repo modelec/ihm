@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QStackedWidget>
 #include <QPixmap>
+#include <TCPSocket/TCPClient.hpp>
+#include <TCPSocket/TCPUtils.hpp>
 
 #include "homeButton.h"
 #include "Homologation.h"
@@ -12,10 +14,10 @@
 #include "TeamChooser.h"
 #include "TestMode.h"
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow, public TCPClient {
     Q_OBJECT
 public:
-    MainWindow(QWidget* parent = nullptr) : QMainWindow(parent)
+    MainWindow(const char* address = "127.0.0.1", int port = 8080, QWidget* parent = nullptr) : QMainWindow(parent), TCPClient(address, port)
     {
         this->centralWidget = new QWidget(this);
         this->setCentralWidget(centralWidget);
@@ -65,7 +67,9 @@ public:
         this->preparationMatch = new PreparationMatch(centralWidget);
         connect(this->preparationMatch, &PreparationMatch::startGame, this, &MainWindow::onStartGame);
         // connect(this->preparationMatch, &PreparationMatch::askTCPServer, this, &MainWindow::broadcastTCPMessage);
-        connect(this->preparationMatch, &PreparationMatch::askTCPServer, this, &MainWindow::broadcastTCPMessage);
+        connect(this->preparationMatch, &PreparationMatch::askTCPServer, [&](const std::string& message) {
+            this->sendMessage(message.c_str());
+        });
 
         this->testMode = new TestMode(centralWidget);
         connect(this->testMode, &TestMode::goPressed, this, &MainWindow::moveRobot);
@@ -103,6 +107,24 @@ public:
             this->quit->show();
         }
         this->stackedWidget->setCurrentIndex(index);
+    }
+
+    void handleMessage(const std::string& message) override
+    {
+        std::vector<std::string> list = split(message, ";");
+
+        if (startWith(list[2], "pong"))
+        {
+            preparationMatch->responseFromPing(QString::fromStdString(message));
+        }
+        if (contains(list[0], "tirette") && contains(list[2], "set state"))
+        {
+            preparationMatch->responseTiretteState(QString::fromStdString(message));
+        }
+        if (contains(list[0], "lidar"))
+        {
+            preparationMatch->responseLidar(QString::fromStdString(message));
+        }
     }
 
 protected slots:
@@ -146,32 +168,10 @@ protected slots:
         emit replierRobot();
     }
 
-public slots:
-    void onTCPMesssageReceived(const std::string& message)
-    {
-        QString qMessage = QString::fromStdString(message);
-
-        auto list = qMessage.split(";");
-
-        if (list[2].startsWith("pong"))
-        {
-            preparationMatch->responseFromPing(qMessage);
-        }
-        if (list[0] == "tirette" && list[2] == "set state")
-        {
-            preparationMatch->responseTiretteState(qMessage);
-        }
-        if (list[0] == "lidar")
-        {
-            preparationMatch->responseLidar(qMessage);
-        }
-    }
-
 signals:
     void deplierRobot();
     void replierRobot();
     void moveRobot(int x, int y, int theta);
-    void broadcastTCPMessage(const std::string& message);
 
 private:
     QVBoxLayout* mainLayout;

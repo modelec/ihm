@@ -6,6 +6,14 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(TCPSocket REQUIRED TCPSocket)
+
+find_package(Qt6 COMPONENTS
+        Core
+        Gui
+        Widgets
+        REQUIRED)
 
 set(HEADERS
         MainWindow.h
@@ -36,26 +44,13 @@ set(SOURCES
         preparation/TiretteState.cpp
 )
 
-set(TCP
-        tcp/TCPServer.hpp
-        tcp/TCPServer.cpp
-        tcp/utils.hpp
-)
+add_executable(ihm_robot resource.qrc ${HEADERS} ${SOURCES})
 
-
-find_package(Qt6 COMPONENTS
-        Core
-        Gui
-        Widgets
-        Network
-        REQUIRED)
-
-add_executable(ihm_robot resource.qrc ${HEADERS} ${SOURCES} ${TCP})
+target_link_libraries(ihm_robot TCPSocket)
 
 target_link_libraries(ihm_robot
         Qt::Core
         Qt::Gui
         Qt::Widgets
-        Qt::Network
 )
 
