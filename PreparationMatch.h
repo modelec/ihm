@@ -105,6 +105,15 @@ public:
         this->lidar->TCPMessage(message);
     }
 
+    void clearCheckboxes()
+    {
+        this->ledVerte->setChecked(false);
+        this->arduino->setChecked(false);
+        this->aruco->setChecked(false);
+        this->lidarPing->setChecked(false);
+        this->tirette->setChecked(false);
+    }
+
 signals:
     void startGame();
 

@@ -149,6 +149,7 @@ protected slots:
 
     void onSpawnPointChoose(int nb)
     {
+        this->preparationMatch->clearCheckboxes();
         this->setWidgetNb(3);
     }
 

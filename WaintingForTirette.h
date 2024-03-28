@@ -38,7 +38,7 @@ public:
         });
 
         this->disarme = new QPushButton("Disarme", this);
-        this->disarme->setStyleSheet("background-color: #5FC8E6; border-radius: 20px; height: 66px; width: 378px; color: black; font-size: 33px;");
+        this->disarme->setStyleSheet("background-color: #ED4747; border-radius: 20px; height: 66px; width: 378px; color: black; font-size: 33px;");
         this->disarme->setBaseSize(378, 66);
         this->mainLayout->addWidget(this->disarme);
         connect(this->disarme, &QPushButton::pressed, this, &WaintingForTirette::disarmePressed);
