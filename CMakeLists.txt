@@ -13,6 +13,7 @@ find_package(Qt6 COMPONENTS
         Core
         Gui
         Widgets
+        Network
         REQUIRED)
 
 set(HEADERS
@@ -42,6 +43,8 @@ set(SOURCES
         preparation/Lidar.cpp
         preparation/OneItemPreparation.cpp
         preparation/TiretteState.cpp
+        tcp/TCPClient.cpp
+        tcp/TCPClient.h
 )
 
 add_executable(ihm_robot resource.qrc ${HEADERS} ${SOURCES})
@@ -52,5 +55,5 @@ target_link_libraries(ihm_robot
         Qt::Core
         Qt::Gui
         Qt::Widgets
+        Qt::Network
 )
-

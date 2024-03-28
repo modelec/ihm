@@ -67,17 +67,17 @@ signals:
 public slots:
     void onStartButtonClicked()
     {
-        emit askTCPServer("strat;lidar;start;0");
+        emit askTCPServer("ihm;lidar;start;0");
     }
 
     void onHealthButtonClicked()
     {
-        emit askTCPServer("strat;lidar;get health;0");
+        emit askTCPServer("ihm;lidar;get health;0");
     }
 
     void onPositionButtonClicked()
     {
-        emit askTCPServer("strat;lidar;get data;0");
+        emit askTCPServer("ihm;lidar;get data;0");
     }
 
 private:

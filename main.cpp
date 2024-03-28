@@ -15,6 +15,7 @@ int main(int argc, char* argv[]) {
     }
 
     auto* main = new MainWindow("127.0.0.1", port);
+    main->start();
 
     MainWindow::connect(main, &MainWindow::replierRobot, [=]()
     {

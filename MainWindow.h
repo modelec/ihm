@@ -111,17 +111,19 @@ public:
 
     void handleMessage(const std::string& message) override
     {
-        std::vector<std::string> list = split(message, ";");
+        std::cout << "Received message: " << message << std::endl;
 
-        if (startWith(list[2], "pong"))
+        std::vector<std::string> list = TCPSocket::split(message, ";");
+
+        if (TCPSocket::startWith(list[2], "pong"))
         {
             preparationMatch->responseFromPing(QString::fromStdString(message));
         }
-        if (contains(list[0], "tirette") && contains(list[2], "set state"))
+        if (TCPSocket::contains(list[0], "tirette") && TCPSocket::contains(list[2], "set state"))
         {
             preparationMatch->responseTiretteState(QString::fromStdString(message));
         }
-        if (contains(list[0], "lidar"))
+        if (TCPSocket::contains(list[0], "lidar"))
         {
             preparationMatch->responseLidar(QString::fromStdString(message));
         }

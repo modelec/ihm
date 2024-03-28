@@ -35,24 +35,24 @@ public:
 
         this->arduino = new OneItemPreparation("Arduino", "Ping", this);
         connect(this->arduino, &OneItemPreparation::buttonClicked, this, [=]() {
-            // emit askTCPServer("start;tirette;ping;0");
+            // emit askTCPServer("start;arduino;ping;0");
 
             this->arduino->toggleChecked();
         });
 
         this->aruco = new OneItemPreparation("Aruco", "Ping", this);
         connect(this->aruco, &OneItemPreparation::buttonClicked, this, [=]() {
-            emit askTCPServer("strat;aruco;ping;0");
+            emit askTCPServer("ihm;aruco;ping;0");
         });
 
         this->lidarPing = new OneItemPreparation("Lidar", "Ping", this);
         connect(this->lidarPing, &OneItemPreparation::buttonClicked, this, [=]() {
-            emit askTCPServer("strat;lidar;ping;0");
+            emit askTCPServer("ihm;lidar;ping;0");
         });
 
         this->tirette = new OneItemPreparation("Tirette", "Ping", this);
         connect(this->tirette, &OneItemPreparation::buttonClicked, this, [=]() {
-            emit askTCPServer("strat;tirette;ping;0");
+            emit askTCPServer("ihm;tirette;ping;0");
         });
 
         this->rightLayout->addWidget(ledVerte);
@@ -124,6 +124,4 @@ private:
     TiretteState* tiretteState;
 
     QPushButton* startButton;
-
-    int nbOk = 0;
 };
