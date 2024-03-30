@@ -13,11 +13,12 @@ find_package(Qt6 COMPONENTS
         Core
         Gui
         Widgets
+        Network
         REQUIRED)
 
 set(HEADERS
         MainWindow.h
-        homeButton.h
+        HomePage.h
         Homologation.h
         InGame.h
         TeamChooser.h
@@ -27,12 +28,14 @@ set(HEADERS
         preparation/Lidar.h
         PreparationMatch.h
         preparation/OneItemPreparation.h
+        WaintingForTirette.h
+        tcp/MyTCPClient.h
 )
 
 set(SOURCES
         main.cpp
         MainWindow.cpp
-        homeButton.cpp
+        HomePage.cpp
         Homologation.cpp
         InGame.cpp
         TeamChooser.cpp
@@ -43,7 +46,7 @@ set(SOURCES
         preparation/OneItemPreparation.cpp
         preparation/TiretteState.cpp
         WaintingForTirette.cpp
-        WaintingForTirette.h
+        tcp/MyTCPClient.cpp
 )
 
 add_executable(ihm_robot resource.qrc ${HEADERS} ${SOURCES})
@@ -54,4 +57,5 @@ target_link_libraries(ihm_robot
         Qt::Core
         Qt::Gui
         Qt::Widgets
+        Qt::Network
 )

@@ -8,6 +8,22 @@
 int main(int argc, char* argv[]) {
     QApplication a(argc, argv);
 
+    DisplayMode mode;
+
+    if (argc >= 2)
+    {
+        if (argv[1] == std::string("fullscreen"))
+        {
+            mode = DisplayMode::FULLSCREEN;
+        } else
+        {
+            mode = DisplayMode::WINDOWED;
+        }
+    } else
+    {
+        mode = DisplayMode::WINDOWED;
+    }
+
     int port = 8080;
     if (argc >= 3)
     {
@@ -15,6 +31,8 @@ int main(int argc, char* argv[]) {
     }
 
     auto* main = new MainWindow("127.0.0.1", port);
+
+    main->setDisplayMode(mode);
 
     MainWindow::connect(main, &MainWindow::replierRobot, [=]()
     {
@@ -30,20 +48,6 @@ int main(int argc, char* argv[]) {
     {
             qInfo() << "move" << x << y << theta;
     });
-
-    if (argc >= 2)
-    {
-        if (argv[1] == std::string("fullscreen"))
-        {
-            main->showFullScreen();
-        } else
-        {
-            main->show();
-        }
-    } else
-    {
-        main->show();
-    }
 
     return QApplication::exec();
 }
