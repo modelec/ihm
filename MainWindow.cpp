@@ -1,6 +1,8 @@
 #include "MainWindow.h"
 
 MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWindow(parent) {
+    this->settings = new QSettings("settings.ini", QSettings::IniFormat);
+
     this->tcpClient = new MyTCPClient(address, port, this);
     connect(this->tcpClient, &MyTCPClient::messageReceived, this, &MainWindow::handleMessage);
 
@@ -45,8 +47,14 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
     connect(this->home, &HomePage::testClicked, this, &MainWindow::onTestModePressed);
 
     this->homologation = new Homologation(centralWidget);
-    connect(this->homologation, &Homologation::deplierClicked, this, &MainWindow::deplierRobot);
-    connect(this->homologation, &Homologation::replierClicked, this, &MainWindow::replierRobot);
+    connect(this->homologation, &Homologation::deplierClicked, this, [&]() {
+        // TODO servo moteur
+        this->tcpClient->sendMessage("ihm;strat;deplier;1");
+    });
+    connect(this->homologation, &Homologation::replierClicked, [&]() {
+        // TODO servo moteur
+        this->tcpClient->sendMessage("ihm;strat;replier;1");
+    });
 
     this->teamChooser = new TeamChooser(centralWidget);
     connect(this->teamChooser, &TeamChooser::spawnPointChoose, this, &MainWindow::onSpawnPointChoose);
@@ -59,7 +67,7 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
         emit this->onWaitingForTirette();
     });
     connect(this->preparationMatch, &PreparationMatch::askTCPServer, [&](const std::string& message) {
-        this->tcpClient->sendMessage(message.c_str());
+        this->tcpClient->sendMessage(message);
     });
 
     this->waintingForTirette = new WaintingForTirette(centralWidget);
@@ -71,7 +79,9 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
     });
 
     this->testMode = new TestMode(centralWidget);
-    connect(this->testMode, &TestMode::goPressed, this, &MainWindow::moveRobot);
+    connect(this->testMode, &TestMode::goPressed, [&](int x, int y, int theta) {
+        this->tcpClient->sendMessage("ihm;strat;go;" + std::to_string(x) + "," + std::to_string(y) + "," + std::to_string(theta));
+    });
 
     this->inGame = new InGame(teamChooser);
 
@@ -147,6 +157,8 @@ void MainWindow::onTestModePressed()
 
 void MainWindow::onSpawnPointChoose(int nb)
 {
+    this->settings->setValue("spawnPoint", nb);
+    this->tcpClient->sendMessage("ihm;strat;spawn;" + std::to_string(nb));
     this->preparationMatch->clearCheckboxes();
     this->setWidgetNb(3);
 }
@@ -159,16 +171,6 @@ void MainWindow::onWaitingForTirette()
 void MainWindow::onStartGame()
 {
     this->setWidgetNb(6);
-}
-
-void MainWindow::onDeplierRobot()
-{
-    emit deplierRobot();
-}
-
-void MainWindow::onReplierRobot()
-{
-    emit replierRobot();
 }
 
 

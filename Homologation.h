@@ -1,4 +1,5 @@
 #pragma once
+
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -7,7 +8,7 @@
 class Homologation : public QWidget {
     Q_OBJECT
 public:
-    Homologation(QWidget* parent = nullptr);
+    explicit Homologation(QWidget* parent = nullptr);
 
 protected slots:
     void onDeplierClicked();

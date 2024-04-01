@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QStackedWidget>
 #include <QPixmap>
+#include <QSettings>
 
 #include "HomePage.h"
 #include "Homologation.h"
@@ -46,17 +47,7 @@ protected slots:
 
     void onStartGame();
 
-    void onDeplierRobot();
-
-    void onReplierRobot();
-
     void handleMessage(const std::string& message);
-
-
-signals:
-    void deplierRobot();
-    void replierRobot();
-    void moveRobot(int x, int y, int theta);
 
 private:
     QVBoxLayout* mainLayout;
@@ -78,4 +69,5 @@ private:
     DisplayMode displayMode = DisplayMode::WINDOWED;
 
     MyTCPClient* tcpClient;
+    QSettings* settings;
 };
