@@ -25,7 +25,7 @@ PreparationMatch::PreparationMatch(QWidget* parent) : QWidget(parent)
 
     this->arduino = new OneItemPreparation("Arduino", "Ping", this);
     connect(this->arduino, &OneItemPreparation::buttonClicked, this, [=]() {
-        emit askTCPServer("start;arduino;ping;0");
+        emit askTCPServer("ihm;arduino;ping;1");
     });
 
     this->aruco = new OneItemPreparation("Aruco", "Ping", this);
@@ -43,11 +43,17 @@ PreparationMatch::PreparationMatch(QWidget* parent) : QWidget(parent)
         emit askTCPServer("ihm;tirette;ping;1");
     });
 
+    this->servo_pot = new OneItemPreparation("Servo Pot", "Ping", this);
+    connect(this->servo_pot, &OneItemPreparation::buttonClicked, this, [=]() {
+        emit askTCPServer("ihm;servo_pot;ping;1");
+    });
+
     this->rightLayout->addWidget(ledVerte);
     this->rightLayout->addWidget(arduino);
     this->rightLayout->addWidget(aruco);
     this->rightLayout->addWidget(lidarPing);
     this->rightLayout->addWidget(tirette);
+    this->rightLayout->addWidget(servo_pot);
 
     this->gridLayout->addLayout(leftLayout);
     this->gridLayout->addLayout(rightLayout);
@@ -74,9 +80,10 @@ void PreparationMatch::responseFromPing(const QString& message)
         this->lidarPing->setChecked(true);
     } else if (list[0] == "aruco") {
         this->aruco->setChecked(true);
-    }
-    else if (list[0] == "arduino") {
+    } else if (list[0] == "arduino") {
         this->arduino->setChecked(true);
+    } else if (list[0] == "servo_pot") {
+        this->servo_pot->setChecked(true);
     }
 }
 

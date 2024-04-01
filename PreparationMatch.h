@@ -38,6 +38,7 @@ private:
     OneItemPreparation* aruco;
     OneItemPreparation* lidarPing;
     OneItemPreparation* tirette;
+    OneItemPreparation* servo_pot;
     TiretteState* tiretteState;
 
     QPushButton* startButton;

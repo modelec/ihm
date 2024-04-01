@@ -8,44 +8,15 @@ class TiretteState : public QWidget {
     Q_OBJECT
 
 public:
-    TiretteState(QWidget* parent = nullptr) : QWidget(parent)
-    {
-        this->mainLayout = new QVBoxLayout(this);
-        this->title = new QLabel("Tirette", this);
-        this->title->setStyleSheet("font-size: 24px; color: black;");
+    TiretteState(QWidget* parent = nullptr);
 
-        this->tiretteStateLayout = new QHBoxLayout();
-        this->stateLabel = new QLabel(" ", this);
-        this->stateButton = new QPushButton("Get state", this);
-        this->stateButton->setStyleSheet("height: 46px; color: black; font-size: 24px;");
-        this->tiretteStateLayout->addWidget(stateLabel);
-        this->tiretteStateLayout->addWidget(stateButton);
-
-        this->mainLayout->addWidget(this->title, 0, Qt::AlignCenter);
-        this->mainLayout->addLayout(this->tiretteStateLayout);
-
-        connect(this->stateButton, &QPushButton::clicked, this, &TiretteState::onStateButtonClicked);
-    }
-
-    void setState(const std::string& state)
-    {
-        if (state == "1")
-        {
-            this->stateLabel->setText("1 : Tirette en place");
-        } else if (state == "0")
-        {
-            this->stateLabel->setText("0 : Tirette absente");
-        }
-    }
+    void setState(const std::string& state);
 
 signals:
     void askTCPServer(const std::string& message);
 
 public slots:
-    void onStateButtonClicked()
-    {
-        emit askTCPServer("strat;tirette;get state;0");
-    }
+    void onStateButtonClicked();
 
 private:
     QVBoxLayout* mainLayout;

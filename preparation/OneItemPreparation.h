@@ -9,49 +9,19 @@ class OneItemPreparation : public QWidget {
     Q_OBJECT
 
 public:
-    OneItemPreparation(const QString& title, const QString& buttonText, QWidget* parent = nullptr) : QWidget(parent)
-    {
-        this->mainLayout = new QHBoxLayout(this);
+    OneItemPreparation(const QString& title, const QString& buttonText, QWidget* parent = nullptr);
 
-        this->item = new QLabel(title, this);
-        this->item->setStyleSheet("font-size: 24px; color: black;");
-        this->checkBox = new QCheckBox(this);
-        this->button = new QPushButton(buttonText, this);
-        this->button->setStyleSheet("height: 46px; color: black; font-size: 24px;");
+    void setChecked(bool checked) const;
 
-        this->mainLayout->addWidget(item);
-        this->mainLayout->addWidget(checkBox);
-        this->mainLayout->addWidget(button);
+    void toggleChecked() const;
 
-        this->checkBox->setDisabled(true);
-
-        connect(this->button, &QPushButton::pressed, this, &OneItemPreparation::onButtonClicked);
-    }
-
-    void setChecked(const bool checked) const
-    {
-        this->checkBox->setChecked(checked);
-    }
-
-    void toggleChecked() const
-    {
-        this->checkBox->toggle();
-    }
-
-    bool isChecked() const
-    {
-        return this->checkBox->isChecked();
-    }
+    [[nodiscard]] bool isChecked() const;
 
 signals:
     void buttonClicked();
 
 public slots:
-    void onButtonClicked()
-    {
-        emit buttonClicked();
-    }
-
+    void onButtonClicked();
 
 private:
     QHBoxLayout* mainLayout;
