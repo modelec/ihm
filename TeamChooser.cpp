@@ -9,22 +9,22 @@ TeamChooser::TeamChooser(QWidget* parent) : QWidget(parent)
     this->bottomLayout = new QHBoxLayout();
 
     this->spawnPoint1 = new QPushButton("1", this);
-    this->spawnPoint1->setFixedSize(50, 50);
+    this->spawnPoint1->setFixedSize(75, 75);
     this->spawnPoint1->setStyleSheet("border: 1px solid black; color: white; background-color: rgba(0, 0, 255, 200); font-size: 20px;");
     this->spawnPoint2 = new QPushButton("2", this);
-    this->spawnPoint2->setFixedSize(50, 50);
+    this->spawnPoint2->setFixedSize(75, 75);
     this->spawnPoint2->setStyleSheet("border: 1px solid black; color: black; background-color: rgba(255, 255, 0, 200); font-size: 20px;");
     this->spawnPoint3 = new QPushButton("3", this);
-    this->spawnPoint3->setFixedSize(50, 50);
+    this->spawnPoint3->setFixedSize(75, 75);
     this->spawnPoint3->setStyleSheet("border: 1px solid black; color: white; background-color: rgba(0, 0, 255, 200); font-size: 20px;");
     this->spawnPoint4 = new QPushButton("4", this);
-    this->spawnPoint4->setFixedSize(50, 50);
+    this->spawnPoint4->setFixedSize(75, 75);
     this->spawnPoint4->setStyleSheet("border: 1px solid black; color: black; background-color: rgba(255, 255, 0, 200); font-size: 20px;");
     this->spawnPoint5 = new QPushButton("5", this);
-    this->spawnPoint5->setFixedSize(50, 50);
+    this->spawnPoint5->setFixedSize(75, 75);
     this->spawnPoint5->setStyleSheet("border: 1px solid black; color: white; background-color: rgba(0, 0, 255, 200); font-size: 20px;");
     this->spawnPoint6 = new QPushButton("6", this);
-    this->spawnPoint6->setFixedSize(50, 50);
+    this->spawnPoint6->setFixedSize(75, 75);
     this->spawnPoint6->setStyleSheet("border: 1px solid black; color: black; background-color: rgba(255, 255, 0, 200); font-size: 20px");
 
     this->mainLayout->addLayout(topLayout);
