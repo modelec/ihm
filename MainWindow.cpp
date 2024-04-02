@@ -48,12 +48,22 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
 
     this->homologation = new Homologation(centralWidget);
     connect(this->homologation, &Homologation::deplierClicked, this, [&]() {
-        // TODO servo moteur
-        this->tcpClient->sendMessage("ihm;strat;deplier;1");
+        this->tcpClient->sendMessage("ihm;servo_pot;baisser bras;1");
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        this->tcpClient->sendMessage("ihm;servo_pot;ouvrir pince;1");
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        this->tcpClient->sendMessage("ihm;servo_pot;ouvrir pince;2");
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        this->tcpClient->sendMessage("ihm;servo_pot;ouvrir pince;3");
     });
     connect(this->homologation, &Homologation::replierClicked, [&]() {
-        // TODO servo moteur
-        this->tcpClient->sendMessage("ihm;strat;replier;1");
+        this->tcpClient->sendMessage("ihm;servo_pot;lever bras;1");
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        this->tcpClient->sendMessage("ihm;servo_pot;fermer pince;1");
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        this->tcpClient->sendMessage("ihm;servo_pot;fermer pince;2");
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        this->tcpClient->sendMessage("ihm;servo_pot;fermer pince;3");
     });
 
     this->teamChooser = new TeamChooser(centralWidget);
@@ -80,7 +90,7 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
 
     this->testMode = new TestMode(centralWidget);
     connect(this->testMode, &TestMode::goPressed, [&](int x, int y, int theta) {
-        this->tcpClient->sendMessage("ihm;strat;go;" + std::to_string(x) + "," + std::to_string(y) + "," + std::to_string(theta));
+        this->tcpClient->sendMessage("ihm;arduino;go;" + std::to_string(x) + "," + std::to_string(y) + "," + std::to_string(theta));
     });
 
     this->inGame = new InGame(teamChooser);
