@@ -49,20 +49,20 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
     this->homologation = new Homologation(centralWidget);
     connect(this->homologation, &Homologation::deplierClicked, this, [&]() {
         this->tcpClient->sendMessage("ihm;servo_pot;baisser bras;1");
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         this->tcpClient->sendMessage("ihm;servo_pot;ouvrir pince;1");
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         this->tcpClient->sendMessage("ihm;servo_pot;ouvrir pince;2");
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         this->tcpClient->sendMessage("ihm;servo_pot;ouvrir pince;3");
     });
     connect(this->homologation, &Homologation::replierClicked, [&]() {
         this->tcpClient->sendMessage("ihm;servo_pot;lever bras;1");
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         this->tcpClient->sendMessage("ihm;servo_pot;fermer pince;1");
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         this->tcpClient->sendMessage("ihm;servo_pot;fermer pince;2");
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         this->tcpClient->sendMessage("ihm;servo_pot;fermer pince;3");
     });
 
