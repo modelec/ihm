@@ -92,8 +92,8 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
     this->testMode = new TestMode(centralWidget);
     connect(this->testMode, &TestMode::goPressed, [&](int x, int y, int theta) {
         this->tcpClient->sendMessage("ihm;arduino;go;" + std::to_string(x) + "," + std::to_string(y));
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        this->tcpClient->sendMessage("ihm;arduino;angle;" + std::to_string(theta));
+        // std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        // this->tcpClient->sendMessage("ihm;arduino;angle;" + std::to_string(theta));
     });
 
     this->inGame = new InGame(teamChooser);
