@@ -18,10 +18,10 @@ private:
     QHBoxLayout *layout;
     QLabel *textLabel;
     QLabel *valueLabel;
+    QPushButton *decrement100;
     QPushButton *decrement10;
-    QPushButton *decrement;
-    QPushButton *increment;
     QPushButton *increment10;
+    QPushButton *increment100;
 
     int value = 0;
 

@@ -18,9 +18,9 @@ TestMode::TestMode(QWidget *parent) : QWidget(parent) {
     this->textrad->setAlignment(Qt::AlignCenter);
     this->mainLayout->addWidget(textrad);
 
-    this->X = new TestModeBtn("X", 0, 150, this);
+    this->X = new TestModeBtn("X", 0, 1500, this);
     this->mainLayout->addWidget(X);
-    this->Y = new TestModeBtn("Y", 0, 300, this);
+    this->Y = new TestModeBtn("Y", 0, 3000, this);
     this->mainLayout->addWidget(Y);
     this->Theta = new TestModeBtn("θ", -180, 180, this);
     this->mainLayout->addWidget(Theta);
