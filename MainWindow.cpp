@@ -73,9 +73,9 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
         this->tcpClient->sendMessage("ihm;servo_moteur;fermer pince;1");
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         this->tcpClient->sendMessage("ihm;servo_moteur;fermer pince;2");
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        this->tcpClient->sendMessage("ihm;servo_moteur;baisser bras;1");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        this->tcpClient->sendMessage("ihm;servo_moteur;baisser bras;1");
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
         this->tcpClient->sendMessage("ihm;servo_moteur;uncheck panneau;6");
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         this->tcpClient->sendMessage("ihm;servo_moteur;uncheck panneau;7");
