@@ -43,8 +43,8 @@ PreparationMatch::PreparationMatch(QWidget* parent) : QWidget(parent)
         emit askTCPServer("ihm;tirette;ping;1");
     });
 
-    this->servo_pot = new OneItemPreparation("Servo Moteur", "Ping", this);
-    connect(this->servo_pot, &OneItemPreparation::buttonClicked, this, [=]() {
+    this->servo_moteur = new OneItemPreparation("Servo Moteur", "Ping", this);
+    connect(this->servo_moteur, &OneItemPreparation::buttonClicked, this, [=]() {
         emit askTCPServer("ihm;servo_moteur;ping;1");
     });
 
@@ -53,7 +53,7 @@ PreparationMatch::PreparationMatch(QWidget* parent) : QWidget(parent)
     this->rightLayout->addWidget(aruco);
     this->rightLayout->addWidget(lidarPing);
     this->rightLayout->addWidget(tirette);
-    this->rightLayout->addWidget(servo_pot);
+    this->rightLayout->addWidget(servo_moteur);
 
     this->gridLayout->addLayout(leftLayout);
     this->gridLayout->addLayout(rightLayout);
@@ -82,8 +82,8 @@ void PreparationMatch::responseFromPing(const QString& message)
         this->aruco->setChecked(true);
     } else if (list[0] == "arduino") {
         this->arduino->setChecked(true);
-    } else if (list[0] == "servo_pot") {
-        this->servo_pot->setChecked(true);
+    } else if (list[0] == "servo_moteur") {
+        this->servo_moteur->setChecked(true);
     }
 }
 
@@ -105,4 +105,5 @@ void PreparationMatch::clearCheckboxes()
     this->aruco->setChecked(false);
     this->lidarPing->setChecked(false);
     this->tirette->setChecked(false);
+    this->servo_moteur->setChecked(false);
 }
