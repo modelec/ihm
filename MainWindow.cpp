@@ -52,7 +52,7 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         this->tcpClient->sendMessage("ihm;servo_moteur;ouvrir pince;0");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        this->tcpClient->sendMessage("ihm;servo_moteur;ouvrir pince;1");
+        this->tcpClient->sendMessage("ihm;servo_moteur;fermer pince;1");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         this->tcpClient->sendMessage("ihm;servo_moteur;ouvrir pince;2");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
