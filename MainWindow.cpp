@@ -50,25 +50,25 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
     connect(this->homologation, &Homologation::deplierClicked, this, [&]() {
         this->tcpClient->sendMessage("ihm;servo_moteur;lever bras;1");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        this->tcpClient->sendMessage("ihm;servo_moteur;ouvrir pince;0");
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         this->tcpClient->sendMessage("ihm;servo_moteur;ouvrir pince;1");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         this->tcpClient->sendMessage("ihm;servo_moteur;ouvrir pince;2");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        this->tcpClient->sendMessage("ihm;servo_moteur;ouvrir pince;3");
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         this->tcpClient->sendMessage("ihm;servo_moteur;check panneau;6");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         this->tcpClient->sendMessage("ihm;servo_moteur;check panneau;7");
-});
+    });
 
     connect(this->homologation, &Homologation::replierClicked, [&]() {
         this->tcpClient->sendMessage("ihm;servo_moteur;baisser bras;1");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        this->tcpClient->sendMessage("ihm;servo_moteur;fermer pince;0");
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         this->tcpClient->sendMessage("ihm;servo_moteur;fermer pince;1");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         this->tcpClient->sendMessage("ihm;servo_moteur;fermer pince;2");
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        this->tcpClient->sendMessage("ihm;servo_moteur;fermer pince;3");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         this->tcpClient->sendMessage("ihm;servo_moteur;uncheck panneau;6");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
