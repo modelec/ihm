@@ -48,23 +48,31 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
 
     this->homologation = new Homologation(centralWidget);
     connect(this->homologation, &Homologation::deplierClicked, this, [&]() {
-        this->tcpClient->sendMessage("ihm;servo_pot;baisser bras;1");
+        this->tcpClient->sendMessage("ihm;servo_moteur;baisser bras;1");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        this->tcpClient->sendMessage("ihm;servo_pot;ouvrir pince;1");
+        this->tcpClient->sendMessage("ihm;servo_moteur;ouvrir pince;1");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        this->tcpClient->sendMessage("ihm;servo_pot;ouvrir pince;2");
+        this->tcpClient->sendMessage("ihm;servo_moteur;ouvrir pince;2");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        this->tcpClient->sendMessage("ihm;servo_pot;ouvrir pince;3");
-    });
+        this->tcpClient->sendMessage("ihm;servo_moteur;ouvrir pince;3");
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        this->tcpClient->sendMessage("ihm;servo_moteur;check panneau;6");
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        this->tcpClient->sendMessage("ihm;servo_moteur;check panneau;7");
+});
 
     connect(this->homologation, &Homologation::replierClicked, [&]() {
-        this->tcpClient->sendMessage("ihm;servo_pot;lever bras;1");
+        this->tcpClient->sendMessage("ihm;servo_moteur;lever bras;1");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        this->tcpClient->sendMessage("ihm;servo_pot;fermer pince;1");
+        this->tcpClient->sendMessage("ihm;servo_moteur;fermer pince;1");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        this->tcpClient->sendMessage("ihm;servo_pot;fermer pince;2");
+        this->tcpClient->sendMessage("ihm;servo_moteur;fermer pince;2");
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        this->tcpClient->sendMessage("ihm;servo_pot;fermer pince;3");
+        this->tcpClient->sendMessage("ihm;servo_moteur;fermer pince;3");
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        this->tcpClient->sendMessage("ihm;servo_moteur;uncheck panneau;6");
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        this->tcpClient->sendMessage("ihm;servo_moteur;uncheck panneau;7");
     });
 
     this->teamChooser = new TeamChooser(centralWidget);
@@ -96,7 +104,7 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
         // this->tcpClient->sendMessage("ihm;arduino;angle;" + std::to_string(theta));
     });
 
-    this->inGame = new InGame(teamChooser);
+    this->inGame = new InGame(centralWidget);
 
     this->stackedWidget = new QStackedWidget(centralWidget);
     this->stackedWidget->addWidget(this->home);
@@ -150,6 +158,7 @@ void MainWindow::turnOnTheWindow() {
 
 void MainWindow::onHomePressed()
 {
+    this->waitingForTiretteValue = false;
     this->setWidgetNb(0);
 }
 
@@ -191,11 +200,11 @@ void MainWindow::handleMessage(const std::string& message)
 {
     std::vector<std::string> list = TCPSocket::split(message, ";");
 
-    if (TCPSocket::startWith(list[2], "pong"))
+    if (list[2] == "pong")
     {
         preparationMatch->responseFromPing(QString::fromStdString(message));
     }
-    else if (TCPSocket::contains(list[0], "tirette") && TCPSocket::contains(list[2], "set state"))
+    else if (list[0] == "tirette" && list[2] == "set state")
     {
         if (waitingForTiretteValue)
         {
@@ -205,11 +214,11 @@ void MainWindow::handleMessage(const std::string& message)
             preparationMatch->responseTiretteState(QString::fromStdString(message));
         }
     }
-    else if (TCPSocket::contains(list[0], "lidar"))
+    else if (list[0] == "lidar")
     {
         preparationMatch->responseLidar(QString::fromStdString(message));
     }
-    else if (list[0] == "strat" && list[1] == "all" && list[2] == "ready")
+    else if (message == "strat;all;ready;1")
     {
         this->turnOnTheWindow();
     }

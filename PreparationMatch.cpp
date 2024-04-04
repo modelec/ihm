@@ -43,9 +43,9 @@ PreparationMatch::PreparationMatch(QWidget* parent) : QWidget(parent)
         emit askTCPServer("ihm;tirette;ping;1");
     });
 
-    this->servo_pot = new OneItemPreparation("Servo Pot", "Ping", this);
+    this->servo_pot = new OneItemPreparation("Servo Moteur", "Ping", this);
     connect(this->servo_pot, &OneItemPreparation::buttonClicked, this, [=]() {
-        emit askTCPServer("ihm;servo_pot;ping;1");
+        emit askTCPServer("ihm;servo_moteur;ping;1");
     });
 
     this->rightLayout->addWidget(ledVerte);
