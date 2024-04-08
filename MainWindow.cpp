@@ -199,6 +199,7 @@ void MainWindow::onWaitingForTirette()
 void MainWindow::onStartGame()
 {
     this->setWidgetNb(6);
+    this->tcpClient->sendMessage("ihm;strat;start;1");
 }
 
 
