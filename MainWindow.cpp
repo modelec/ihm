@@ -238,6 +238,6 @@ void MainWindow::handleMessage(const std::string& message)
     {
         std::vector<std::string> msg = TCPSocket::split(list[3], ",");
         std::cout << "X : " << msg[0] << " Y : " << msg[1] << std::endl;
-        this->inGame->updatePos(msg[0], msg[1]);
+        this->inGame->updatePos(std::to_string(std::stoi(msg[0])), std::to_string(std::stoi(msg[1])));
     }
 }
