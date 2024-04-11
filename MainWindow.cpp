@@ -234,4 +234,9 @@ void MainWindow::handleMessage(const std::string& message)
     {
         this->turnOnTheWindow();
     }
+    else if (list[2] == "set pos")
+    {
+        auto msg = TCPSocket::split(list[3], ";");
+        this->inGame->updatePos(msg[0], msg[1]);
+    }
 }

@@ -40,11 +40,12 @@ void InGame::updateScode(const int score) const
     this->pts->setText("Points : " + QString::number(score));
 }
 
-void InGame::updatePos(const int x, const int y) const
+void InGame::updatePos(const std::string x, const std::string y) const
 {
-    this->x->setText("X : " + QString::number(x));
-    this->y->setText("Y : " + QString::number(y));
+    this->x->setText("X : " + QString::fromStdString(x));
+    this->y->setText("Y : " + QString::fromStdString(y));
 }
+
 
 void InGame::showEvent(QShowEvent* event)
 {
@@ -58,4 +59,5 @@ void InGame::updateTime()
     int min = this->timeCounter / 60;
     int sec = this->timeCounter % 60;
     this->time->setText("Time : " + QString::number(min) + "m" + QString::number(sec) + "s");
+    emit askTCPServer("ihm;start;get pos;1");
 }

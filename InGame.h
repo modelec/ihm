@@ -11,11 +11,14 @@ public:
 
     void updateScode(int score) const;
 
-    void updatePos(int x, int y) const;
+    void updatePos(std::string x, std::string y) const;
 
     void updateTime();
 
     void showEvent(QShowEvent* event) override;
+
+signals:
+    askTCPServer(const std::string& message);
 
 private:
     QLabel* pts;
