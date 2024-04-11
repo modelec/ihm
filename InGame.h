@@ -18,7 +18,7 @@ public:
     void showEvent(QShowEvent* event) override;
 
 signals:
-    askTCPServer(const std::string& message);
+    void askTCPServer(const std::string& message);
 
 private:
     QLabel* pts;
