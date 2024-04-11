@@ -2,6 +2,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QWidget>
+#include <QTimer>
 
 class InGame : public QWidget {
     Q_OBJECT
@@ -12,7 +13,9 @@ public:
 
     void updatePos(int x, int y) const;
 
-    void updateTime(int min, int sec) const;
+    void updateTime();
+
+    void showEvent(QShowEvent* event) override;
 
 private:
     QLabel* pts;
@@ -22,4 +25,6 @@ private:
     QVBoxLayout* mainLayout;
     QHBoxLayout* posAndTimeLayout;
     QVBoxLayout* posLayout;
+    QTimer* timer;
+    int timeCounter = 0;
 };

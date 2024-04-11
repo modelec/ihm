@@ -29,6 +29,10 @@ InGame::InGame(QWidget *parent) : QWidget(parent) {
     this->posAndTimeLayout->addLayout(this->posLayout);
 
     this->setLayout(mainLayout);
+
+    this->timer = new QTimer(this);
+    this->timer->setInterval(1000); // 1 second
+    connect(this->timer, &QTimer::timeout, this, &InGame::updateTime);
 }
 
 void InGame::updateScode(const int score) const
@@ -42,7 +46,16 @@ void InGame::updatePos(const int x, const int y) const
     this->y->setText("Y : " + QString::number(y));
 }
 
-void InGame::updateTime(const int min, const int sec) const
+void InGame::showEvent(QShowEvent* event)
 {
+    QWidget::showEvent(event);
+    this->timer->start();
+}
+
+void InGame::updateTime()
+{
+    this->timeCounter++;
+    int min = this->timeCounter / 60;
+    int sec = this->timeCounter % 60;
     this->time->setText("Time : " + QString::number(min) + "m" + QString::number(sec) + "s");
 }
