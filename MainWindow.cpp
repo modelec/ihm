@@ -111,6 +111,9 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
     });
 
     this->inGame = new InGame(centralWidget);
+    connect(this->inGame, &InGame::askTCPServer, [&](const std::string& message) {
+        this->tcpClient->sendMessage(message);
+    });
 
     this->stackedWidget = new QStackedWidget(centralWidget);
     this->stackedWidget->addWidget(this->home);
