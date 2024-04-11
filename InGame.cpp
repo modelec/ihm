@@ -59,5 +59,5 @@ void InGame::updateTime()
     int min = this->timeCounter / 60;
     int sec = this->timeCounter % 60;
     this->time->setText("Time : " + QString::number(min) + "m" + QString::number(sec) + "s");
-    emit askTCPServer("ihm;start;get pos;1");
+    emit askTCPServer("ihm;strat;get pos;1");
 }
