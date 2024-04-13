@@ -42,7 +42,6 @@ void WaintingForTirette::responseFromTirette(const std::string& response)
 
     if (list[3] == "0")
     {
-        qInfo() << "Game should start";
         emit startGame();
     }
 }
