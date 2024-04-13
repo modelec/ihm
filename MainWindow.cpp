@@ -218,11 +218,9 @@ void MainWindow::handleMessage(const std::string& message)
     {
         if (waitingForTiretteValue)
         {
-            qInfo() << "Tirette change, start game";
             waintingForTirette->responseFromTirette(message);
         } else
         {
-            qInfo() << "Tirette change, change the text";
             preparationMatch->responseTiretteState(QString::fromStdString(message));
         }
     }
