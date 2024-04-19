@@ -13,6 +13,10 @@ public:
 
     void updatePos(std::string x, std::string y) const;
 
+    void updateSpeed(std::string speed) const;
+
+    void updateAngle(std::string angle) const;
+
     void updateTime();
 
     void showEvent(QShowEvent* event) override;
@@ -25,6 +29,8 @@ private:
     QLabel* x;
     QLabel* y;
     QLabel* time;
+    QLabel* speed;
+    QLabel* angle;
     QVBoxLayout* mainLayout;
     QHBoxLayout* posAndTimeLayout;
     QVBoxLayout* posLayout;

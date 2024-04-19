@@ -11,6 +11,10 @@ InGame::InGame(QWidget *parent) : QWidget(parent) {
     this->y->setStyleSheet("font-size: 32px; color: black;");
     this->time = new QLabel("Time : 0m0s", this);
     this->time->setStyleSheet("font-size: 32px; color: black;");
+    this->speed = new QLabel("Vitesse : 0", this);
+    this->speed->setStyleSheet("font-size: 32px; color: black;");
+    this->angle = new QLabel("Angle : 0", this);
+    this->angle->setStyleSheet("font-size: 32px; color: black;");
 
     this->mainLayout->addWidget(pts);
 
@@ -46,6 +50,16 @@ void InGame::updatePos(const std::string x, const std::string y) const
     this->y->setText("Y : " + QString::fromStdString(y));
 }
 
+void InGame::updateSpeed(const std::string speed) const
+{
+    this->speed->setText("Vitesse : " + QString::fromStdString(speed));
+}
+
+void InGame::updateAngle(const std::string angle) const
+{
+    this->angle->setText("Angle : " + QString::fromStdString(angle));
+}
+
 
 void InGame::showEvent(QShowEvent* event)
 {
@@ -60,4 +74,6 @@ void InGame::updateTime()
     int sec = this->timeCounter % 60;
     this->time->setText("Time : " + QString::number(min) + "m" + QString::number(sec) + "s");
     emit askTCPServer("ihm;strat;get pos;1");
+    emit askTCPServer("ihm;strat;get speed;1");
+    emit askTCPServer("ihm;strat;get angle;1");
 }
