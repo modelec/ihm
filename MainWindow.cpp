@@ -245,4 +245,7 @@ void MainWindow::handleMessage(const std::string& message)
     {
         this->inGame->updateAngle(list[3]);
     }
+    else if (list[2] == "end") {
+        this->inGame->stopTimer();
+    }
 }

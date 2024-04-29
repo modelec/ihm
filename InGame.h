@@ -21,6 +21,8 @@ public:
 
     void showEvent(QShowEvent* event) override;
 
+    void stopTimer();
+
 signals:
     void askTCPServer(const std::string& message);
 

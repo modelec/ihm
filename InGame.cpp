@@ -77,3 +77,7 @@ void InGame::updateTime()
     emit askTCPServer("ihm;strat;get speed;1");
     emit askTCPServer("ihm;strat;get angle;1");
 }
+
+void InGame::stopTimer() {
+    this->timer->stop();
+}
