@@ -236,7 +236,7 @@ void MainWindow::handleMessage(const std::string& message)
     {
         std::vector<std::string> msg = TCPSocket::split(list[3], ",");
         this->inGame->updatePos(std::to_string(std::stoi(msg[0])), std::to_string(std::stoi(msg[1])));
-        this->inGame->updateAngle(std::to_string(std::stoi(msg[2]) * 1.8));
+        this->inGame->updateAngle(std::to_string(static_cast<int>(std::stoi(msg[2]) * 0.57325)));
     }
     else if (list[2] == "set speed")
     {
