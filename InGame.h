@@ -11,17 +11,17 @@ public:
 
     void updateScode(int score) const;
 
-    void updatePos(std::string x, std::string y) const;
+    void updatePos(const std::string& x, const std::string &y) const;
 
-    void updateSpeed(std::string speed) const;
+    void updateSpeed(const std::string& speed) const;
 
-    void updateAngle(std::string angle) const;
+    void updateAngle(const std::string& angle) const;
 
     void updateTime();
 
     void showEvent(QShowEvent* event) override;
 
-    void stopTimer();
+    void stopTimer() const;
 
 signals:
     void askTCPServer(const std::string& message);

@@ -28,6 +28,8 @@ InGame::InGame(QWidget *parent) : QWidget(parent) {
 
     this->posLayout->addWidget(x);
     this->posLayout->addWidget(y);
+    this->posLayout->addWidget(speed);
+    this->posLayout->addWidget(angle);
     this->posLayout->setAlignment(Qt::AlignCenter);
 
     this->posAndTimeLayout->addLayout(this->posLayout);
@@ -44,18 +46,18 @@ void InGame::updateScode(const int score) const
     this->pts->setText("Points : " + QString::number(score));
 }
 
-void InGame::updatePos(const std::string x, const std::string y) const
+void InGame::updatePos(const std::string& x, const std::string &y) const
 {
     this->x->setText("X : " + QString::fromStdString(x));
     this->y->setText("Y : " + QString::fromStdString(y));
 }
 
-void InGame::updateSpeed(const std::string speed) const
+void InGame::updateSpeed(const std::string& speed) const
 {
     this->speed->setText("Vitesse : " + QString::fromStdString(speed));
 }
 
-void InGame::updateAngle(const std::string angle) const
+void InGame::updateAngle(const std::string& angle) const
 {
     this->angle->setText("Angle : " + QString::fromStdString(angle));
 }
@@ -78,6 +80,6 @@ void InGame::updateTime()
     emit askTCPServer("ihm;strat;get angle;1");
 }
 
-void InGame::stopTimer() {
+void InGame::stopTimer() const {
     this->timer->stop();
 }
