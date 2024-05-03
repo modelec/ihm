@@ -245,4 +245,10 @@ void MainWindow::handleMessage(const std::string& message)
     else if (list[2] == "end") {
         this->inGame->stopTimer();
     }
+    else if (list[2] == "set points") {
+        this->inGame->setScore(std::stoi(list[3]));
+    }
+    else if (list[2] == "add point") {
+        this->inGame->addScore(std::stoi(list[3]));
+    }
 }

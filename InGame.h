@@ -9,7 +9,7 @@ class InGame : public QWidget {
 public:
     explicit InGame(QWidget* parent = nullptr);
 
-    void updateScode(int score) const;
+    void updateScode() const;
 
     void updatePos(const std::string& x, const std::string &y) const;
 
@@ -22,6 +22,10 @@ public:
     void showEvent(QShowEvent* event) override;
 
     void stopTimer() const;
+
+    void setScore(int score);
+
+    void addScore(int score);
 
 signals:
     void askTCPServer(const std::string& message);
@@ -38,4 +42,6 @@ private:
     QVBoxLayout* posLayout;
     QTimer* timer;
     int timeCounter = 0;
+
+    int score = 0;
 };

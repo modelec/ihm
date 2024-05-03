@@ -41,9 +41,9 @@ InGame::InGame(QWidget *parent) : QWidget(parent) {
     connect(this->timer, &QTimer::timeout, this, &InGame::updateTime);
 }
 
-void InGame::updateScode(const int score) const
+void InGame::updateScode() const
 {
-    this->pts->setText("Points : " + QString::number(score));
+    this->pts->setText("Points : " + QString::number(this->score));
 }
 
 void InGame::updatePos(const std::string& x, const std::string &y) const
@@ -82,4 +82,14 @@ void InGame::updateTime()
 
 void InGame::stopTimer() const {
     this->timer->stop();
+}
+
+void InGame::addScore(int score) {
+    this->score += score;
+    this->updateScode();
+}
+
+void InGame::setScore(int score) {
+    this->score = score;
+    this->updateScode();
 }
