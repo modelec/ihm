@@ -81,7 +81,7 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
 
     connect(this->homologation, &Homologation::panneauDroitClicked, [&]() {
         this->tcpClient->sendMessage("ihm;servo_moteur;baisser bras;1\n");
-        this->tcpClient->sendMessage("ihm;servo_moteur;check panneau;7");
+        this->tcpClient->sendMessage("ihm;servo_moteur;check panneau;7\n");
     });
 
     this->teamChooser = new TeamChooser(centralWidget);
