@@ -15,14 +15,22 @@ protected slots:
 
     void onReplierClicked();
 
+    void onPanneauGaucheClicked();
+
+    void onPanneauDroitClicked();
+
 signals:
     void deplierClicked();
     void replierClicked();
+    void panneauGaucheClicked();
+    void panneauDroitClicked();
 
 private:
     QLayout* layout;
     QLabel* text;
     QPushButton* deplier;
     QPushButton* replier;
+    QPushButton* panneauGauche;
+    QPushButton* panneauDroit;
 
 };

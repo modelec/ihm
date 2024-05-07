@@ -18,9 +18,21 @@ Homologation::Homologation(QWidget *parent) : QWidget(parent) {
     replier->setBaseSize(378, 66);
     layout->addWidget(replier);
 
+    this->panneauGauche = new QPushButton("Panneau gauche", this);
+    panneauGauche->setStyleSheet("background-color: #5FC8E6; border-radius: 20px; height: 66px; width: 378px; margin-top: 20px; color: black; font-size: 33px;");
+    panneauGauche->setBaseSize(378, 66);
+    layout->addWidget(panneauGauche);
+
+    this->panneauDroit = new QPushButton("Panneau droit", this);
+    panneauDroit->setStyleSheet("background-color: #ED4747; border-radius: 20px; height: 66px; width: 378px; margin-top: 20px; color: black; font-size: 33px;");
+    panneauDroit->setBaseSize(378, 66);
+    layout->addWidget(panneauDroit);
+
     connect(this->deplier, &QPushButton::pressed, this, &Homologation::onDeplierClicked);
 
     connect(this->replier, &QPushButton::pressed, this, &Homologation::onReplierClicked);
+
+    connect(this->panneauGauche, &QPushButton::pressed, this, &Homologation::onPanneauGaucheClicked);
 }
 
 void Homologation::onDeplierClicked()
@@ -31,4 +43,14 @@ void Homologation::onDeplierClicked()
 void Homologation::onReplierClicked()
 {
     emit replierClicked();
+}
+
+void Homologation::onPanneauDroitClicked()
+{
+    emit panneauDroitClicked();
+}
+
+void Homologation::onPanneauGaucheClicked()
+{
+    emit panneauGaucheClicked();
 }
