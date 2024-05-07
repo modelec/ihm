@@ -48,6 +48,9 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
 
     this->homologation = new Homologation(centralWidget);
     connect(this->homologation, &Homologation::deplierClicked, this, [&]() {
+        this->tcpClient->sendMessage("ihm;servo_moteur;uncheck panneau;6\n");
+        this->tcpClient->sendMessage("ihm;servo_moteur;uncheck panneau;7\n");
+
         this->tcpClient->sendMessage("ihm;servo_moteur;fermer pince;0");
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
         this->tcpClient->sendMessage("ihm;servo_moteur;fermer pince;1");
@@ -72,10 +75,12 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
     });
 
     connect(this->homologation, &Homologation::panneauGaucheClicked, [&]() {
-        this->tcpClient->sendMessage("ihm;servo_moteur;check panneau;6");
+        this->tcpClient->sendMessage("ihm;servo_moteur;baisser bras;1\n");
+        this->tcpClient->sendMessage("ihm;servo_moteur;check panneau;6\n");
     });
 
     connect(this->homologation, &Homologation::panneauDroitClicked, [&]() {
+        this->tcpClient->sendMessage("ihm;servo_moteur;baisser bras;1\n");
         this->tcpClient->sendMessage("ihm;servo_moteur;check panneau;7");
     });
 
