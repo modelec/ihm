@@ -50,7 +50,7 @@ void Lidar::TCPMessage(const QString &message) {
         {
             this->healthTitle->setText("Health : KO");
         }
-    } else if (list[2] == "set avoidance")
+    } else if (list[2] == "set pos")
     {
         auto pos = list[3].split(",");
         this->postionTitle->setText("x: " + pos[0] + ", y: " + pos[1] + ", r: " + pos[2]);
@@ -69,5 +69,5 @@ void Lidar::onHealthButtonClicked()
 
 void Lidar::onPositionButtonClicked()
 {
-    emit askTCPServer("ihm;lidar;get data;1");
+    emit askTCPServer("ihm;lidar;get pos;1");
 }
