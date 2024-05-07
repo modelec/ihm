@@ -33,6 +33,8 @@ Homologation::Homologation(QWidget *parent) : QWidget(parent) {
     connect(this->replier, &QPushButton::pressed, this, &Homologation::onReplierClicked);
 
     connect(this->panneauGauche, &QPushButton::pressed, this, &Homologation::onPanneauGaucheClicked);
+
+    connect(this->panneauDroit, &QPushButton::pressed, this, &Homologation::onPanneauDroitClicked);
 }
 
 void Homologation::onDeplierClicked()
