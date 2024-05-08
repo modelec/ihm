@@ -3,6 +3,9 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QTimer>
+#include <QPixmap>
+#include <QPalette>
+#include <QBrush>
 
 class InGame : public QWidget {
     Q_OBJECT
