@@ -33,10 +33,6 @@ public:
 
     void turnOnTheWindow();
 
-    bool shouldStop() const { return _shouldStop; }
-
-    void setShouldStop(bool value) { _shouldStop = value; }
-
 protected slots:
     void onHomePressed();
 
@@ -75,6 +71,4 @@ private:
 
     MyTCPClient* tcpClient;
     QSettings* settings;
-
-    std::atomic<bool> _shouldStop = false;
 };
