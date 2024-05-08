@@ -5,6 +5,7 @@
 #include <QStackedWidget>
 #include <QPixmap>
 #include <QSettings>
+#include <atomic>
 
 #include "HomePage.h"
 #include "Homologation.h"
@@ -31,6 +32,10 @@ public:
     void setDisplayMode(DisplayMode mode);
 
     void turnOnTheWindow();
+
+    bool shouldStop() const { return _shouldStop; }
+
+    void setShouldStop(bool value) { _shouldStop = value; }
 
 protected slots:
     void onHomePressed();
@@ -70,4 +75,6 @@ private:
 
     MyTCPClient* tcpClient;
     QSettings* settings;
+
+    std::atomic<bool> _shouldStop = false;
 };

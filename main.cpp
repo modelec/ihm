@@ -2,10 +2,24 @@
 #include <QApplication>
 #include <QObject>
 #include <QThread>
+#include <atomic>
+#include <csignal>
 
 #include "MainWindow.h"
 
+MainWindow* mainWindowPtr = nullptr;
+
+void signalHandler(int signum) {
+    if(mainWindowPtr != nullptr){
+        mainWindowPtr->setShouldStop(true);
+    }
+}
+
 int main(int argc, char* argv[]) {
+
+    signal(SIGINT, signalHandler);
+    signal(SIGTERM, signalHandler);
+
     QApplication a(argc, argv);
 
     DisplayMode mode;
@@ -31,6 +45,22 @@ int main(int argc, char* argv[]) {
     }
 
     auto* main = new MainWindow("127.0.0.1", port);
+    mainWindowPtr = main;
+
+    try{
+        main->setDisplayMode(mode);
+
+        while(!main->shouldStop()){
+            usleep(100'000);
+        }
+
+        delete main;
+    }
+    catch(const std::exception& e){
+        std::cerr << e.what() << std::endl;
+        delete main;
+        return 1;
+    }
 
     main->setDisplayMode(mode);
 
