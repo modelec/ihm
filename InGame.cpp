@@ -3,6 +3,7 @@
 InGame::InGame(QWidget *parent) : QWidget(parent) {
     this->mainLayout = new QVBoxLayout(this);
     this->mainLayout->setAlignment(Qt::AlignCenter);
+    this->setStyleSheet("background-image: url(:/img/ISEN-Nantes.png); background-repeat: no-repeat; background-position: center; background-color: white;");
     this->pts = new QLabel("Points : 0", this);
     this->pts->setStyleSheet("font-size: 96px; color: black;");
     this->x = new QLabel("X : 0", this);
