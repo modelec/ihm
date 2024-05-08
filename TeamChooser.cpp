@@ -39,26 +39,32 @@ TeamChooser::TeamChooser(QWidget* parent) : QWidget(parent)
     this->bottomLayout->addWidget(spawnPoint6, 0, Qt::AlignBottom | Qt::AlignRight);
 
     connect(this->spawnPoint1, &QPushButton::pressed, this, [=]() {
+        qDebug() << "Spawn point 1 clicked";
         spawnPointClicked(1);
     });
 
     connect(this->spawnPoint2, &QPushButton::pressed, this, [=]() {
+        qDebug() << "Spawn point 2 clicked";
         spawnPointClicked(2);
     });
 
     connect(this->spawnPoint3, &QPushButton::pressed, this, [=]() {
+        qDebug() << "Spawn point 3 clicked";
         spawnPointClicked(3);
     });
 
     connect(this->spawnPoint4, &QPushButton::pressed, this, [=]() {
+        qDebug() << "Spawn point 4 clicked";
         spawnPointClicked(4);
     });
 
     connect(this->spawnPoint5, &QPushButton::pressed, this, [=]() {
+        qDebug() << "Spawn point 5 clicked";
         spawnPointClicked(5);
     });
 
     connect(this->spawnPoint6, &QPushButton::pressed, this, [=]() {
+        qDebug() << "Spawn point 6 clicked";
         spawnPointClicked(6);
     });
 }
