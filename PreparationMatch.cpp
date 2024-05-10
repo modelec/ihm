@@ -63,7 +63,7 @@ PreparationMatch::PreparationMatch(QWidget* parent) : QWidget(parent)
 
     connect(this->startButton, &QPushButton::pressed, [&]()
     {
-        if (ledVerte->isChecked() && arduino->isChecked() && aruco->isChecked() && lidarPing->isChecked() && tirette->isChecked())
+        if (ledVerte->isChecked() && arduino->isChecked() && lidarPing->isChecked() && tirette->isChecked())
         {
             emit startGame();
         }
