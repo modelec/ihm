@@ -5,6 +5,7 @@
 #include <QStackedWidget>
 #include <QPixmap>
 #include <QSettings>
+#include <atomic>
 
 #include "HomePage.h"
 #include "Homologation.h"

@@ -2,11 +2,22 @@
 #include <QApplication>
 #include <QObject>
 #include <QThread>
+#include <csignal>
 
 #include "MainWindow.h"
 
+void signalHandler(int sigmum) {
+    std::cout << "Inteerupt signal (" << sigmum << ") received.\n";
+
+    QApplication::quit();
+}
+
 int main(int argc, char* argv[]) {
+
     QApplication a(argc, argv);
+
+    signal(SIGTERM, signalHandler);
+    signal(SIGINT, signalHandler);
 
     DisplayMode mode;
 

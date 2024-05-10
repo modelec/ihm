@@ -3,6 +3,11 @@
 InGame::InGame(QWidget *parent) : QWidget(parent) {
     this->mainLayout = new QVBoxLayout(this);
     this->mainLayout->setAlignment(Qt::AlignCenter);
+    QPixmap bgPixmap(":/img/ISEN-Nantes.png");
+    bgPixmap = bgPixmap.scaled(this->size(), Qt::KeepAspectRatioByExpanding);
+    QPalette palette;
+    palette.setBrush(QPalette::Window, QBrush(bgPixmap));
+    this->setPalette(palette);
     this->pts = new QLabel("Points : 0", this);
     this->pts->setStyleSheet("font-size: 96px; color: black;");
     this->x = new QLabel("X : 0", this);
