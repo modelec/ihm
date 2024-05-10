@@ -35,7 +35,6 @@ private:
     Lidar* lidar;
     OneItemPreparation* ledVerte;
     OneItemPreparation* arduino;
-    OneItemPreparation* aruco;
     OneItemPreparation* lidarPing;
     OneItemPreparation* tirette;
     OneItemPreparation* servo_moteur;
