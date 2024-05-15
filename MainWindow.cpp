@@ -263,6 +263,6 @@ void MainWindow::handleMessage(const std::string& message)
     }
     else if (list[2] == "game mode" && list[3] == "gc") {
         this->setWidgetNb(7);
-        setStyleSheet("background-color: #FFF;");
+        setStyleSheet("background-color: black;");
     }
 }
