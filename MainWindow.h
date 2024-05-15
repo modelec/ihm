@@ -16,6 +16,7 @@
 #include "TeamChooser.h"
 #include "TestMode.h"
 #include "WaintingForTirette.h"
+#include "GCMode.h"
 #include "tcp/MyTCPClient.h"
 
 enum class DisplayMode
@@ -74,6 +75,5 @@ private:
     MyTCPClient* tcpClient;
     QSettings* settings;
 
-    QLabel* gifLabel;
-    QMovie* gifMovie;
+    GCMode* gcMode;
 };

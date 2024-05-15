@@ -30,6 +30,7 @@ set(HEADERS
         preparation/OneItemPreparation.h
         WaintingForTirette.h
         tcp/MyTCPClient.h
+        GCMode.h
 )
 
 set(SOURCES
@@ -47,6 +48,7 @@ set(SOURCES
         preparation/TiretteState.cpp
         WaintingForTirette.cpp
         tcp/MyTCPClient.cpp
+        GCMode.cpp
 )
 
 add_executable(ihm_robot resource.qrc ${HEADERS} ${SOURCES})

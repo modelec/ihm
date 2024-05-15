@@ -122,11 +122,7 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
         this->tcpClient->sendMessage(message);
     });
 
-    gifLabel = new QLabel(this);
-    gifMovie = new QMovie(":/img/tenor.gif");
-
-    gifLabel->setMovie(gifMovie);
-    gifMovie->start();
+    gcMode = new GCMode(centralWidget);
 
     this->stackedWidget = new QStackedWidget(centralWidget);
     this->stackedWidget->addWidget(this->home);
@@ -136,7 +132,7 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
     this->stackedWidget->addWidget(this->testMode);
     this->stackedWidget->addWidget(this->waintingForTirette);
     this->stackedWidget->addWidget(this->inGame);
-    this->stackedWidget->addWidget(this->gifLabel);
+    this->stackedWidget->addWidget(this->gcMode);
 
     this->mainLayout->addWidget(this->stackedWidget);
 
@@ -267,6 +263,6 @@ void MainWindow::handleMessage(const std::string& message)
     }
     else if (list[2] == "game mode" && list[3] == "gc") {
         this->setWidgetNb(7);
-        gifLabel->show();
+        setStyleSheet("background-color: #FFF;");
     }
 }
