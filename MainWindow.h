@@ -6,6 +6,8 @@
 #include <QPixmap>
 #include <QSettings>
 #include <atomic>
+#include <QMovie>
+#include <QLabel>
 
 #include "HomePage.h"
 #include "Homologation.h"
@@ -71,4 +73,7 @@ private:
 
     MyTCPClient* tcpClient;
     QSettings* settings;
+
+    QLabel* gifLabel;
+    QMovie* gifMovie;
 };
