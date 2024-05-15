@@ -123,7 +123,7 @@ MainWindow::MainWindow(const char *address, int port, QWidget *parent) : QMainWi
     });
 
     gifLabel = new QLabel(this);
-    gifMovie = new QMovie(":/path/to/your/gif.gif");
+    gifMovie = new QMovie(":/tenor.gif");
 
     gifLabel->setMovie(gifMovie);
     gifMovie->start();
