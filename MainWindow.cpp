@@ -218,7 +218,7 @@ void MainWindow::onStartGame()
 
 void MainWindow::handleMessage(const std::string& message)
 {
-    std::vector<std::string> list = TCPSocket::split(message, ";");
+    std::vector<std::string> list = Modelec::split(message, ";");
 
     if (list[2] == "pong")
     {
@@ -244,7 +244,7 @@ void MainWindow::handleMessage(const std::string& message)
     }
     else if (list[2] == "set pos")
     {
-        std::vector<std::string> msg = TCPSocket::split(list[3], ",");
+        std::vector<std::string> msg = Modelec::split(list[3], ",");
         this->inGame->updatePos(std::to_string(std::stoi(msg[0])), std::to_string(std::stoi(msg[1])));
         this->inGame->updateAngle(std::to_string(static_cast<int>(std::stoi(msg[2]) * 0.57325)));
     }

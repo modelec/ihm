@@ -1,8 +1,8 @@
 #pragma once
 
 #include <QObject>
-#include <TCPSocket/TCPClient.hpp>
-#include <TCPSocket/TCPUtils.hpp>
+#include <Modelec/TCPClient.h>
+#include <Modelec/Utils.h>
 
 class MyTCPClient : public QObject, public TCPClient {
     Q_OBJECT

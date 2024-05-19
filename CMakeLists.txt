@@ -6,8 +6,10 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(TCPSocket REQUIRED TCPSocket)
+find_package(Modelec COMPONENTS
+        TCPClient
+        REQUIRED
+)
 
 find_package(Qt6 COMPONENTS
         Core
@@ -53,7 +55,9 @@ set(SOURCES
 
 add_executable(ihm_robot resource.qrc ${HEADERS} ${SOURCES})
 
-target_link_libraries(ihm_robot TCPSocket)
+target_link_libraries(ihm_robot
+        Modelec::TCPClient
+)
 
 target_link_libraries(ihm_robot
         Qt::Core

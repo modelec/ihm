@@ -38,7 +38,7 @@ WaintingForTirette::~WaintingForTirette() {
 
 void WaintingForTirette::responseFromTirette(const std::string& response)
 {
-    std::vector<std::string> list = TCPSocket::split(response, ";");
+    std::vector<std::string> list = Modelec::split(response, ";");
 
     if (list[3] == "0")
     {

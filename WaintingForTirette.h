@@ -5,7 +5,7 @@
 #include <QWidget>
 #include <QTimer>
 #include <QVBoxLayout>
-#include <TCPSocket/TCPUtils.hpp>
+#include <Modelec/Utils.h>
 
 #include "HomePage.h"
 
