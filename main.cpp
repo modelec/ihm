@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QThread>
 #include <csignal>
+#include <Modelec/CLParser.h>
 
 #include "MainWindow.h"
 
@@ -19,27 +20,20 @@ int main(int argc, char* argv[]) {
     signal(SIGTERM, signalHandler);
     signal(SIGINT, signalHandler);
 
-    DisplayMode mode;
+    CLParser clParser(argc, argv);
 
-    if (argc >= 2)
-    {
-        if (argv[1] == std::string("fullscreen"))
-        {
-            mode = DisplayMode::FULLSCREEN;
-        } else
-        {
-            mode = DisplayMode::WINDOWED;
-        }
-    } else
-    {
+    std::string dMode = clParser.getOption("window_mode", "windowed");
+
+    DisplayMode mode = DisplayMode::WINDOWED;
+
+    if (dMode == "windowed") {
         mode = DisplayMode::WINDOWED;
     }
-
-    int port = 8080;
-    if (argc >= 3)
-    {
-        port = std::stoi(argv[2]);
+    else if (dMode == "fullscreen") {
+        mode = DisplayMode::FULLSCREEN;
     }
+
+    int port = std::stoi(clParser.getOption("port", "8080"));
 
     auto* main = new MainWindow("127.0.0.1", port);
 

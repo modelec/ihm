@@ -8,6 +8,8 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(Modelec COMPONENTS
         TCPClient
+        Utils
+        CLParser
         REQUIRED
 )
 
