@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
         mode = DisplayMode::FULLSCREEN;
     }
 
-    int port = std::stoi(clParser.getOption("port", "8080"));
+    int port = clParser.getOption<int>("port", 8080);
 
     auto* main = new MainWindow("127.0.0.1", port);
 
