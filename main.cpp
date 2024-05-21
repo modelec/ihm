@@ -35,7 +35,9 @@ int main(int argc, char* argv[]) {
 
     int port = clParser.getOption<int>("port", 8080);
 
-    auto* main = new MainWindow("127.0.0.1", port);
+    auto host = clParser.getOption("host", "127.0.0.1");
+
+    auto* main = new MainWindow(host, port);
 
     main->setDisplayMode(mode);
 
