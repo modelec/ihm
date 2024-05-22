@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
 
     CLParser clParser(argc, argv);
 
-    std::string dMode = clParser.getOption("window_mode", "windowed");
+    std::string dMode = clParser.getOption("window-mode", "windowed");
 
     DisplayMode mode = DisplayMode::WINDOWED;
 
