@@ -59,6 +59,8 @@ add_executable(ihm_robot resource.qrc ${HEADERS} ${SOURCES})
 
 target_link_libraries(ihm_robot
         Modelec::TCPClient
+        Modelec::Utils
+        Modelec::CLParser
 )
 
 target_link_libraries(ihm_robot
